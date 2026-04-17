@@ -1,7 +1,7 @@
 function App() {
 	return (
 		<div className="min-h-screen">
-			<h1>APP de inventario</h1>
+			<h1>Inventario</h1>
 		</div>
 	);
 }
