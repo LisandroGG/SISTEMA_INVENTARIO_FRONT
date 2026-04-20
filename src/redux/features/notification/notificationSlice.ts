@@ -28,7 +28,7 @@ const notificationSlice = createSlice({
 				state.loading = false;
 				state.notifications = action.payload;
 			})
-			.addCase(getAllNotifications.pending, (state, action) => {
+			.addCase(getAllNotifications.rejected, (state, action) => {
 				state.loading = false;
 				state.error = action.payload ?? "Error al obtener notificaciones";
 			})
