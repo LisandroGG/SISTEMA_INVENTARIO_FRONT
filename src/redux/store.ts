@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import categoryReducer from "./features/category/categorySlice";
+import movementReducer from "./features/movement/movementSlice";
 import productReducer from "./features/products/productSlice";
 import stockReducer from "./features/stock/stockSlice";
 
@@ -8,6 +9,7 @@ export const store = configureStore({
 		products: productReducer,
 		categories: categoryReducer,
 		stocks: stockReducer,
+		movements: movementReducer,
 	},
 });
 
