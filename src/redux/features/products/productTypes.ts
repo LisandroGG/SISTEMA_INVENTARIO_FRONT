@@ -19,9 +19,6 @@ export type Product = {
 
 	category: Category;
 	stock: Stock;
-
-	createdAt: string;
-	updatedAt: string;
 };
 
 export type ProductState = {
