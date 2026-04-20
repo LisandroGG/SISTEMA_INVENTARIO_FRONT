@@ -3,6 +3,7 @@ import categoryReducer from "./features/category/categorySlice";
 import movementReducer from "./features/movement/movementSlice";
 import notificationReducer from "./features/notification/notificationSlice";
 import productReducer from "./features/products/productSlice";
+import saleReducer from "./features/sale/saleSlice";
 import stockReducer from "./features/stock/stockSlice";
 
 export const store = configureStore({
@@ -12,6 +13,7 @@ export const store = configureStore({
 		stocks: stockReducer,
 		movements: movementReducer,
 		notifications: notificationReducer,
+		sales: saleReducer,
 	},
 });
 

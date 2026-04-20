@@ -66,7 +66,6 @@ const productSlice = createSlice({
 			})
 			.addCase(createProduct.fulfilled, (state, action) => {
 				state.loading = false;
-
 				state.products.unshift(action.payload.product);
 			})
 			.addCase(createProduct.rejected, (state, action) => {
@@ -82,7 +81,6 @@ const productSlice = createSlice({
 				state.loading = false;
 
 				const updated = action.payload.product;
-
 				const index = state.products.findIndex((p) => p.id === updated.id);
 
 				if (index !== -1) {
