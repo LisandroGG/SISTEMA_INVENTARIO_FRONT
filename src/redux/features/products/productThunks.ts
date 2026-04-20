@@ -1,0 +1,110 @@
+import axios from "@api/axiosInstance";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import type {
+	CreateProductData,
+	DeleteProductResponse,
+	GetProductsParams,
+	GetProductsResponse,
+	Product,
+	ProductResponse,
+	UpdateProductData,
+} from "./productTypes";
+
+export const getAllProducts = createAsyncThunk<
+	GetProductsResponse,
+	GetProductsParams,
+	{ rejectValue: string }
+>("products/getAllProducts", async (params, { rejectWithValue }) => {
+	try {
+		const response = await axios.get<GetProductsResponse>("/products", {
+			params,
+		});
+		return response.data;
+	} catch (_error) {
+		return rejectWithValue("Error al obtener productos");
+	}
+});
+
+export const getProductById = createAsyncThunk<
+	Product,
+	number,
+	{ rejectValue: string }
+>("products/getProductById", async (id, { rejectWithValue }) => {
+	try {
+		const response = await axios.get<Product>(`/products/${id}`);
+		return response.data;
+	} catch (_error) {
+		return rejectWithValue("Error al obtener producto por ID");
+	}
+});
+
+export const createProduct = createAsyncThunk<
+	ProductResponse,
+	CreateProductData,
+	{ rejectValue: string }
+>("products/createProduct", async (productData, { rejectWithValue }) => {
+	try {
+		const formData = new FormData();
+
+		formData.append("name", productData.name);
+		formData.append("price", productData.price.toString());
+		if (productData.description) {
+			formData.append("description", productData.description);
+		}
+		formData.append("categoryId", String(productData.categoryId));
+		if (productData.quantity !== undefined) {
+			formData.append("quantity", String(productData.quantity));
+		}
+		if (productData.img) {
+			formData.append("img", productData.img);
+		}
+
+		const response = await axios.post<ProductResponse>("/products", formData);
+		return response.data;
+	} catch (_error) {
+		return rejectWithValue("Error al crear producto");
+	}
+});
+
+export const updateProduct = createAsyncThunk<
+	ProductResponse,
+	UpdateProductData,
+	{ rejectValue: string }
+>("products/updateProduct", async (productData, { rejectWithValue }) => {
+	try {
+		const formData = new FormData();
+
+		formData.append("name", productData.name);
+		formData.append("price", productData.price.toString());
+		if (productData.description !== undefined) {
+			formData.append("description", productData.description);
+		}
+		formData.append("categoryId", String(productData.categoryId));
+		if (productData.img) {
+			formData.append("img", productData.img);
+		}
+
+		const response = await axios.put<ProductResponse>(
+			`/products/${productData.id}`,
+			formData,
+		);
+		return response.data;
+	} catch (_error) {
+		return rejectWithValue("Error al actualizar producto");
+	}
+});
+
+export const deleteProduct = createAsyncThunk<
+	DeleteProductResponse,
+	number,
+	{ rejectValue: string }
+>("products/deleteProduct", async (id, { rejectWithValue }) => {
+	try {
+		const response = await axios.delete<DeleteProductResponse>(
+			`/products/${id}`,
+		);
+		return response.data;
+	} catch (_error) {
+		return rejectWithValue("Error al eliminar producto");
+	}
+});
