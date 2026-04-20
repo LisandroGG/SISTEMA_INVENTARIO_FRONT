@@ -7,5 +7,15 @@ export type Notification = {
 	referenceType?: string;
 
 	createdAt: string;
-	updateAt: string;
+	updatedAt: string;
+};
+
+export type NotificationState = {
+	notifications: Notification[];
+	loading: boolean;
+	error: string | null;
+};
+
+export type NotificationResponse = {
+	message: string;
 };

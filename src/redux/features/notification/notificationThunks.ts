@@ -1,0 +1,73 @@
+import axios from "@api/axiosInstance";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { getErrorMessage } from "@utils/errorHandler";
+import type { Notification, NotificationResponse } from "./notificationTypes";
+
+export const getAllNotifications = createAsyncThunk<
+	Notification[],
+	void,
+	{ rejectValue: string }
+>("notifications/getAllNotifications", async (_, { rejectWithValue }) => {
+	try {
+		const response = await axios.get<Notification[]>("/notifications");
+		return response.data;
+	} catch (error) {
+		return rejectWithValue(
+			getErrorMessage(error, "Error al obtener notificaciones"),
+		);
+	}
+});
+
+export const markNotificationAsRead = createAsyncThunk<
+	NotificationResponse,
+	number,
+	{ rejectValue: string }
+>("notifications/markAsRead", async (id, { rejectWithValue }) => {
+	try {
+		const response = await axios.put<NotificationResponse>(
+			`/notifications/${id}/read`,
+		);
+		return response.data;
+	} catch (error) {
+		return rejectWithValue(
+			getErrorMessage(error, "Error al marcar notificacion como leida"),
+		);
+	}
+});
+
+export const markAllNotificationAsRead = createAsyncThunk<
+	NotificationResponse,
+	void,
+	{ rejectValue: string }
+>("notifications/markAllAsRead", async (_, { rejectWithValue }) => {
+	try {
+		const response = await axios.put<NotificationResponse>(
+			"/notifications/read-all",
+		);
+		return response.data;
+	} catch (error) {
+		return rejectWithValue(
+			getErrorMessage(
+				error,
+				"Error al marcar todas las notificaciones como leidas",
+			),
+		);
+	}
+});
+
+export const deleteNotification = createAsyncThunk<
+	NotificationResponse,
+	number,
+	{ rejectValue: string }
+>("notifications/deleteNotification", async (id, { rejectWithValue }) => {
+	try {
+		const response = await axios.delete<NotificationResponse>(
+			`/notifications/${id}`,
+		);
+		return response.data;
+	} catch (error) {
+		return rejectWithValue(
+			getErrorMessage(error, "Error al eliminar notificacion"),
+		);
+	}
+});
