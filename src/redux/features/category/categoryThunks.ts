@@ -1,5 +1,6 @@
 import axios from "@api/axiosInstance";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { getErrorMessage } from "@utils/errorHandler";
 import type {
 	Category,
 	CategoryResponse,
@@ -12,12 +13,14 @@ export const getAllCategories = createAsyncThunk<
 	Category[],
 	void,
 	{ rejectValue: string }
->("category/getAllCategories", async (_, { rejectWithValue }) => {
+>("categories/getAllCategories", async (_, { rejectWithValue }) => {
 	try {
-		const response = await axios.get<Category[]>("/category");
+		const response = await axios.get<Category[]>("/categories");
 		return response.data;
-	} catch (_error) {
-		return rejectWithValue("Error al obtener categorias");
+	} catch (error) {
+		return rejectWithValue(
+			getErrorMessage(error, "Error al obtener categorias"),
+		);
 	}
 });
 
@@ -25,12 +28,14 @@ export const getCategoryById = createAsyncThunk<
 	Category,
 	number,
 	{ rejectValue: string }
->("category/getCategoryById", async (id, { rejectWithValue }) => {
+>("categories/getCategoryById", async (id, { rejectWithValue }) => {
 	try {
-		const response = await axios.get<Category>(`/category/${id}`);
+		const response = await axios.get<Category>(`/categories/${id}`);
 		return response.data;
-	} catch (_error) {
-		return rejectWithValue("Error al obtener categoria por ID");
+	} catch (error) {
+		return rejectWithValue(
+			getErrorMessage(error, "Error al obtener categoria por ID"),
+		);
 	}
 });
 
@@ -38,15 +43,15 @@ export const createCategory = createAsyncThunk<
 	CategoryResponse,
 	CreateCategoryData,
 	{ rejectValue: string }
->("category/createCategory", async (categoryData, { rejectWithValue }) => {
+>("categories/createCategory", async (categoryData, { rejectWithValue }) => {
 	try {
 		const response = await axios.post<CategoryResponse>(
-			"/category",
+			"/categories",
 			categoryData,
 		);
 		return response.data;
-	} catch (_error) {
-		return rejectWithValue("Error al crear categoria");
+	} catch (error) {
+		return rejectWithValue(getErrorMessage(error, "Error al crear categoria"));
 	}
 });
 
@@ -54,15 +59,17 @@ export const updateCategory = createAsyncThunk<
 	CategoryResponse,
 	UpdateCategoryData,
 	{ rejectValue: string }
->("category/updateCategory", async (categoryData, { rejectWithValue }) => {
+>("categories/updateCategory", async (categoryData, { rejectWithValue }) => {
 	try {
 		const response = await axios.put<CategoryResponse>(
-			`/category/${categoryData.id}`,
+			`/categories/${categoryData.id}`,
 			categoryData,
 		);
 		return response.data;
-	} catch (_error) {
-		return rejectWithValue("Error al actualizar categoria");
+	} catch (error) {
+		return rejectWithValue(
+			getErrorMessage(error, "Error al actualizar categoria"),
+		);
 	}
 });
 
@@ -70,16 +77,18 @@ export const deleteCategory = createAsyncThunk<
 	DeleteCategoryResponse,
 	number,
 	{ rejectValue: string }
->("category/deleteCategory", async (id, { rejectWithValue }) => {
+>("categories/deleteCategory", async (id, { rejectWithValue }) => {
 	try {
 		const response = await axios.delete<DeleteCategoryResponse>(
-			`/category/${id}`,
+			`/categories/${id}`,
 		);
 		return {
 			id,
 			message: response.data.message,
 		};
-	} catch (_error) {
-		return rejectWithValue("Error al eliminar categoria");
+	} catch (error) {
+		return rejectWithValue(
+			getErrorMessage(error, "Error al eliminar categoria"),
+		);
 	}
 });

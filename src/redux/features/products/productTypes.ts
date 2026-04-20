@@ -1,12 +1,14 @@
 export type Category = {
 	id: number;
 	name: string;
+	description?: string;
 };
 
 export type Stock = {
 	id: number;
 	productId: number;
 	quantity: number;
+	minQuantity?: number;
 };
 
 export type Product = {

@@ -1,5 +1,6 @@
 import axios from "@api/axiosInstance";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { getErrorMessage } from "@utils/errorHandler";
 import type {
 	CreateProductData,
 	DeleteProductResponse,
@@ -20,8 +21,10 @@ export const getAllProducts = createAsyncThunk<
 			params,
 		});
 		return response.data;
-	} catch (_error) {
-		return rejectWithValue("Error al obtener productos");
+	} catch (error) {
+		return rejectWithValue(
+			getErrorMessage(error, "Error al obtener productos"),
+		);
 	}
 });
 
@@ -33,8 +36,10 @@ export const getProductById = createAsyncThunk<
 	try {
 		const response = await axios.get<Product>(`/products/${id}`);
 		return response.data;
-	} catch (_error) {
-		return rejectWithValue("Error al obtener producto por ID");
+	} catch (error) {
+		return rejectWithValue(
+			getErrorMessage(error, "Error al obtener producto por ID"),
+		);
 	}
 });
 
@@ -61,8 +66,8 @@ export const createProduct = createAsyncThunk<
 
 		const response = await axios.post<ProductResponse>("/products", formData);
 		return response.data;
-	} catch (_error) {
-		return rejectWithValue("Error al crear producto");
+	} catch (error) {
+		return rejectWithValue(getErrorMessage(error, "Error al crear producto"));
 	}
 });
 
@@ -89,8 +94,10 @@ export const updateProduct = createAsyncThunk<
 			formData,
 		);
 		return response.data;
-	} catch (_error) {
-		return rejectWithValue("Error al actualizar producto");
+	} catch (error) {
+		return rejectWithValue(
+			getErrorMessage(error, "Error al actualizar producto"),
+		);
 	}
 });
 
@@ -107,7 +114,9 @@ export const deleteProduct = createAsyncThunk<
 			id,
 			message: response.data.message,
 		};
-	} catch (_error) {
-		return rejectWithValue("Error al eliminar producto");
+	} catch (error) {
+		return rejectWithValue(
+			getErrorMessage(error, "Error al eliminar producto"),
+		);
 	}
 });
