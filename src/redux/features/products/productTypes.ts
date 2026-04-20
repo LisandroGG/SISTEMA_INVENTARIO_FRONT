@@ -59,6 +59,7 @@ export type ProductResponse = {
 };
 
 export type DeleteProductResponse = {
+	id: number;
 	message: string;
 };
 

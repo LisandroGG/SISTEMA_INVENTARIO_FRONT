@@ -103,7 +103,10 @@ export const deleteProduct = createAsyncThunk<
 		const response = await axios.delete<DeleteProductResponse>(
 			`/products/${id}`,
 		);
-		return response.data;
+		return {
+			id,
+			message: response.data.message,
+		};
 	} catch (_error) {
 		return rejectWithValue("Error al eliminar producto");
 	}
