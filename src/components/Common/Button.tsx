@@ -1,7 +1,7 @@
 import clsx from "clsx";
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-	text: string;
+	text?: string;
 	variant?: "primary" | "secondary" | "danger" | "ghost";
 };
 
