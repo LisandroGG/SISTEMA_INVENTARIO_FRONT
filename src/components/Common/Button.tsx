@@ -7,6 +7,7 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 
 const Button = ({
 	text,
+	children,
 	variant = "primary",
 	className,
 	...rest
@@ -24,7 +25,7 @@ const Button = ({
 
 	return (
 		<button {...rest} className={clsx(base, variants[variant], className)}>
-			{text}
+			{text || children}
 		</button>
 	);
 };
