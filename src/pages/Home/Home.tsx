@@ -1,5 +1,7 @@
+import Section from "@components/Common/Section";
+
 const Home = () => {
-	return <h1>Esto es Home</h1>;
+	return <Section>esto es el contenido hijo</Section>;
 };
 
 export default Home;

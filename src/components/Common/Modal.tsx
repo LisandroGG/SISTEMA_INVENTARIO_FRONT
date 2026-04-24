@@ -1,12 +1,11 @@
 import Button from "@components/Common/Button";
 import ErrorMessage from "@components/Common/ErrorMessage";
-import type { ReactNode } from "react";
 
 type ModalProps = {
 	title: string;
 	confirmText: string;
 	buttonVariant?: "primary" | "secondary" | "danger" | "ghost";
-	children: ReactNode;
+	children: React.ReactNode;
 	onCancel: () => void;
 	onSubmit: () => void;
 	disabled?: boolean;
