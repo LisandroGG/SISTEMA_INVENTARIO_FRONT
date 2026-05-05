@@ -75,8 +75,8 @@ const Products = () => {
 	return (
 		<Section>
 			<div className="flex flex-col min-h-[93vh]">
-				<div className="flex justify-between items-center mb-4">
-					<div className="flex gap-2">
+				<div className="flex flex-col gap-2 md:flex-row justify-between items-center mb-4">
+					<div className="flex flex-col md:flex-row gap-2">
 						<SearchInput
 							type="text"
 							placeholder="Buscar producto..."
