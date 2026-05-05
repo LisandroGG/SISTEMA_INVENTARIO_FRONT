@@ -1,17 +1,26 @@
 import Button from "@components/Common/Button";
+import ConfirmModal from "@components/Common/ConfirmModal";
 import Loading from "@components/Common/Loading";
 import Pagination from "@components/Common/Pagination.jsx";
 import SearchInput from "@components/Common/SearchInput";
 import Section from "@components/Common/Section";
 import Select from "@components/Common/Select";
 import useCrudDispatch from "@hooks/useCrudDispatch.js";
+import useModalState from "@hooks/useModalState";
 import usePagination from "@hooks/usePagination.js";
 import { getAllCategories } from "@redux/features/category/categoryThunks";
-import { getAllProducts } from "@redux/features/products/productThunks";
+import {
+	deleteProduct,
+	getAllProducts,
+} from "@redux/features/products/productThunks";
+import type { Product } from "@redux/features/products/productTypes";
 import type { AppDispatch, RootState } from "@redux/store";
 import { SquarePlus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import AdjustStockModal from "./modals/AdjustStockModal";
+import CreateProductModal from "./modals/CreateProductModal";
+import EditProductModal from "./modals/EditProductModal";
 import ProductCard from "./ProductCard";
 
 const Products = () => {
@@ -19,6 +28,8 @@ const Products = () => {
 	const { categories } = useSelector((state: RootState) => state.categories);
 	const { run } = useCrudDispatch();
 	const dispatch = useDispatch<AppDispatch>();
+	const { openModal, closeModal, isOpen, modalState } =
+		useModalState<Product>();
 
 	// biome-ignore lint: useEffectBug
 	useEffect(() => {
@@ -33,11 +44,7 @@ const Products = () => {
 		loading,
 		goToPage,
 		applyFilters,
-		clearFilters,
-		filters,
 	} = usePagination((state) => state.products, getAllProducts);
-
-	const hasActiveFilters = Object.keys(filters || {}).length > 0;
 
 	const [nameValue, setNameValue] = useState("");
 	const [categoryValue, setCategoryValue] = useState("");
@@ -60,50 +67,86 @@ const Products = () => {
 	if (loading) {
 		return (
 			<div className="min-h-screen grid place-content-center">
-				<Loading loadingText={"Cargando presupuestos..."} />
+				<Loading loadingText={"Cargando productos..."} />
 			</div>
 		);
 	}
 
 	return (
 		<Section>
-			<div className="flex justify-between items-center">
-				<div className="flex gap-2">
-					<SearchInput
-						type="text"
-						placeholder="Buscar producto..."
-						value={nameValue}
-						onChange={(e) => setNameValue(e.target.value)}
-						onKeyDown={(e) => e.key === "Enter" && handleNameSearch()}
-					/>
-					<Select
-						value={categoryValue}
-						onChange={(val) => handleCategoryChange(val)}
-						options={[
-							{ value: "", label: "Todas las categorías" },
-							...categories.map((c) => ({
-								value: String(c.id),
-								label: c.name,
-							})),
-						]}
-					></Select>
+			<div className="flex flex-col min-h-[93vh]">
+				<div className="flex justify-between items-center mb-4">
+					<div className="flex gap-2">
+						<SearchInput
+							type="text"
+							placeholder="Buscar producto..."
+							value={nameValue}
+							onChange={(e) => setNameValue(e.target.value)}
+							onKeyDown={(e) => e.key === "Enter" && handleNameSearch()}
+						/>
+						<Select
+							value={categoryValue}
+							onChange={(val) => handleCategoryChange(val)}
+							options={[
+								{ value: "", label: "Todas las categorías" },
+								...categories.map((c) => ({
+									value: String(c.id),
+									label: c.name,
+								})),
+							]}
+						/>
+					</div>
+					<Button
+						className="flex items-center gap-2"
+						onClick={() => openModal("create")}
+					>
+						<SquarePlus size={20} />
+						Nuevo producto
+					</Button>
 				</div>
-				<Button className="flex items-center gap-2">
-					<SquarePlus size={20} />
-					Nuevo producto
-				</Button>
+				<div className="flex-1">
+					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+						{products.map((p) => (
+							<ProductCard
+								key={p.id}
+								product={p}
+								onEdit={(product) => openModal("edit", product)}
+								onDelete={(product) => openModal("delete", product)}
+								onAdjustStock={(product) => openModal("adjust-stock", product)}
+							/>
+						))}
+					</div>
+				</div>
+				<div className="mt-auto pt-4">
+					<Pagination
+						page={page}
+						totalPages={totalPages}
+						hasPrev={hasPrev}
+						hasNext={hasNext}
+						onPageChange={goToPage}
+					/>
+				</div>
 			</div>
-			<div className="grid grid-cols-4 gap-4">
-				{products.map((p) => (
-					<ProductCard key={p.id} product={p} />
-				))}
-			</div>
-			<Pagination
-				page={page}
-				totalPages={totalPages}
-				hasPrev={hasPrev}
-				hasNext={hasNext}
-				onPageChange={goToPage}
+			<CreateProductModal open={isOpen("create")} onCancel={closeModal} />
+			<EditProductModal
+				open={isOpen("edit")}
+				data={modalState?.data}
+				onCancel={closeModal}
+			/>
+			<ConfirmModal
+				open={isOpen("delete")}
+				title="Eliminar producto"
+				description="¿Estás seguro de que deseas eliminar este producto?"
+				onCancel={closeModal}
+				onConfirm={() => {
+					run(deleteProduct, modalState?.data?.id);
+					closeModal();
+				}}
+			/>
+			<AdjustStockModal
+				open={isOpen("adjust-stock")}
+				data={modalState?.data}
+				onCancel={closeModal}
 			/>
 		</Section>
 	);

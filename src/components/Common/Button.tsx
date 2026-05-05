@@ -13,7 +13,7 @@ const Button = ({
 	...rest
 }: ButtonProps) => {
 	const base =
-		"px-6 py-2 font-semibold transition-all cursor-pointer hover:scale-105 rounded-md";
+		"px-6 py-2 font-semibold transition-all cursor-pointer hover:scale-105 rounded-md shadow-md";
 
 	const variants = {
 		primary: "bg-primary text-white hover:opacity-90",

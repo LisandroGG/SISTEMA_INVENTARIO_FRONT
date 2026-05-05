@@ -35,10 +35,8 @@ const Select = ({
 
 	return (
 		<div className="flex flex-col gap-1">
-			{label && (
-				<span className="text-sm font-medium text-neutral-700">{label}</span>
-			)}
-			<div ref={ref} className="relative w-48">
+			{label && <span className="text-md font-medium">{label}</span>}
+			<div ref={ref} className="relative min-w-48">
 				<button
 					type="button"
 					onClick={() => setOpen(!open)}

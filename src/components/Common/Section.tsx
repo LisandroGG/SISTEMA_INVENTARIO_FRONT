@@ -4,8 +4,8 @@ type SectionProps = {
 
 const Section = ({ children }: SectionProps) => {
 	return (
-		<section>
-			<div className="w-full">{children}</div>
+		<section className="p-6">
+			<div className="w-full flex flex-col gap-6">{children}</div>
 		</section>
 	);
 };
