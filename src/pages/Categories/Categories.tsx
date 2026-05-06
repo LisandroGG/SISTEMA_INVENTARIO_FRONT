@@ -17,6 +17,8 @@ import type { RootState } from "@redux/store";
 import { Pencil, SquarePlus, Trash } from "lucide-react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import CreateCategoryModal from "./modals/CreateCategoryModal";
+import EditCategoryModal from "./modals/EditCategoryModal";
 
 const Categories = () => {
 	const { categories } = useSelector((state: RootState) => state.categories);
@@ -54,12 +56,18 @@ const Categories = () => {
 		{
 			key: "name",
 			label: "NOMBRE DE CATEGORÍA",
-			width: "w-[40%]",
+			width: "w-[30%]",
+		},
+		{
+			key: "description",
+			label: "DESCRIPCIÓN",
+			width: "w-[50%]",
+			render: (item: Category) => item.description || "Sin descripción",
 		},
 		{
 			key: "totalProducts",
 			label: "TOTAL DE PRODUCTOS",
-			width: "w-[40%]",
+			width: "w-[10%]",
 			render: (item: Category) => item.totalProducts || 0,
 		},
 	];
@@ -114,6 +122,12 @@ const Categories = () => {
 					/>
 				</div>
 			</div>
+			<CreateCategoryModal open={isOpen("create")} onCancel={closeModal} />
+			<EditCategoryModal
+				open={isOpen("edit")}
+				data={modalState?.data}
+				onCancel={closeModal}
+			/>
 			<ConfirmModal
 				open={isOpen("delete")}
 				title="Eliminar categoria"
