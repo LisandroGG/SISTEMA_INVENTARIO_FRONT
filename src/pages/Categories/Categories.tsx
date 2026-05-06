@@ -67,7 +67,7 @@ const Categories = () => {
 		{
 			key: "totalProducts",
 			label: "TOTAL DE PRODUCTOS",
-			width: "w-[10%]",
+			width: "w-[15%]",
 			render: (item: Category) => item.totalProducts || 0,
 		},
 	];
