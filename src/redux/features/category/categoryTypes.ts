@@ -2,6 +2,7 @@ export type Category = {
 	id: number;
 	name: string;
 	description?: string;
+	totalProducts?: number;
 };
 
 export type CategoryState = {
@@ -9,6 +10,27 @@ export type CategoryState = {
 	category: Category | null;
 	loading: boolean;
 	error: string | null;
+	page: number;
+	totalPages: number;
+	totalItems: number;
+	limit: number;
+	hasNext: boolean;
+	hasPrev: boolean;
+};
+
+export type GetCategoriesParams = {
+	page?: number;
+	limit?: number;
+	name?: string;
+};
+
+export type GetCategoryResponse = {
+	data: Category[];
+	page: number;
+	totalPages: number;
+	totalItems: number;
+	hasNext: boolean;
+	hasPrev: boolean;
 };
 
 export type CategoryResponse = {

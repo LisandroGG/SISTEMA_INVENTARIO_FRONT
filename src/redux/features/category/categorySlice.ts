@@ -3,6 +3,7 @@ import {
 	createCategory,
 	deleteCategory,
 	getAllCategories,
+	getAllCategoriesNoPagination,
 	getCategoryById,
 	updateCategory,
 } from "./categoryThunks";
@@ -13,6 +14,12 @@ const initialState: CategoryState = {
 	category: null,
 	loading: false,
 	error: null,
+	page: 1,
+	totalPages: 1,
+	totalItems: 0,
+	limit: 9,
+	hasNext: false,
+	hasPrev: false,
 };
 
 const categorySlice = createSlice({
@@ -28,9 +35,27 @@ const categorySlice = createSlice({
 			})
 			.addCase(getAllCategories.fulfilled, (state, action) => {
 				state.loading = false;
-				state.categories = action.payload;
+				state.categories = action.payload.data;
+				state.page = action.payload.page;
+				state.totalPages = action.payload.totalPages;
+				state.totalItems = action.payload.totalItems;
+				state.hasNext = action.payload.hasNext;
+				state.hasPrev = action.payload.hasPrev;
 			})
 			.addCase(getAllCategories.rejected, (state, action) => {
+				state.loading = false;
+				state.error = action.payload ?? "Error al obtener categorias";
+			})
+			//GET ALL CATEGORIES NO PAGINATION
+			.addCase(getAllCategoriesNoPagination.pending, (state) => {
+				state.loading = true;
+				state.error = null;
+			})
+			.addCase(getAllCategoriesNoPagination.fulfilled, (state, action) => {
+				state.loading = false;
+				state.categories = action.payload;
+			})
+			.addCase(getAllCategoriesNoPagination.rejected, (state, action) => {
 				state.loading = false;
 				state.error = action.payload ?? "Error al obtener categorias";
 			})

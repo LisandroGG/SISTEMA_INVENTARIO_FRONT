@@ -8,7 +8,7 @@ import Select from "@components/Common/Select";
 import useCrudDispatch from "@hooks/useCrudDispatch.js";
 import useModalState from "@hooks/useModalState";
 import usePagination from "@hooks/usePagination.js";
-import { getAllCategories } from "@redux/features/category/categoryThunks";
+import { getAllCategoriesNoPagination } from "@redux/features/category/categoryThunks";
 import {
 	deleteProduct,
 	getAllProducts,
@@ -33,7 +33,7 @@ const Products = () => {
 
 	// biome-ignore lint: useEffectBug
 	useEffect(() => {
-		dispatch(getAllCategories());
+		dispatch(getAllCategoriesNoPagination());
 	}, []);
 
 	const {

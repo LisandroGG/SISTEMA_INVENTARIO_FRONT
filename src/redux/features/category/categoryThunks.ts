@@ -6,16 +6,35 @@ import type {
 	CategoryResponse,
 	CreateCategoryData,
 	DeleteCategoryResponse,
+	GetCategoriesParams,
+	GetCategoryResponse,
 	UpdateCategoryData,
 } from "./categoryTypes";
 
 export const getAllCategories = createAsyncThunk<
+	GetCategoryResponse,
+	GetCategoriesParams,
+	{ rejectValue: string }
+>("categories/getAllCategories", async (params, { rejectWithValue }) => {
+	try {
+		const response = await axios.get<GetCategoryResponse>("/categories", {
+			params,
+		});
+		return response.data;
+	} catch (error) {
+		return rejectWithValue(
+			getErrorMessage(error, "Error al obtener categorias"),
+		);
+	}
+});
+
+export const getAllCategoriesNoPagination = createAsyncThunk<
 	Category[],
 	void,
 	{ rejectValue: string }
->("categories/getAllCategories", async (_, { rejectWithValue }) => {
+>("categories/getAllCategoriesNoPagination", async (_, { rejectWithValue }) => {
 	try {
-		const response = await axios.get<Category[]>("/categories");
+		const response = await axios.get<Category[]>("/categories/no-pagination");
 		return response.data;
 	} catch (error) {
 		return rejectWithValue(
