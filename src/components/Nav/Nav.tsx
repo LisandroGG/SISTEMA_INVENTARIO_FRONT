@@ -37,26 +37,103 @@ const Nav = () => {
 
 	return (
 		<>
-			<button
-				type="button"
-				className="lg:hidden fixed top-4 left-4 z-50 bg-secondary text-white p-2 rounded-md"
-				onClick={() => setIsOpen(!isOpen)}
-			>
-				{isOpen ? <X size={20} /> : <Menu size={20} />}
-			</button>
+			<div className="lg:hidden top-0 z-50 bg-secondary shadow-md relative">
+				<div className="h-16 px-4 flex items-center justify-between">
+					<div>
+						<h1 className="text-2xl font-black tracking-tight text-white">
+							Stock
+							<span className="text-primary">{"<tify />"}</span>
+						</h1>
+					</div>
 
-			{isOpen && (
-				<button
-					type="button"
-					className="lg:hidden fixed inset-0 z-30 bg-black/40"
-					onClick={() => setIsOpen(false)}
-					aria-label="Cerrar menú"
-				/>
-			)}
+					<button
+						type="button"
+						onClick={() => setIsOpen(!isOpen)}
+						className="
+							text-white
+							bg-white/10
+							hover:bg-white/20
+							transition-colors
+							p-2
+							rounded-md
+						"
+					>
+						{isOpen ? <X size={20} /> : <Menu size={20} />}
+					</button>
+				</div>
+
+				{isOpen && (
+					<button
+						type="button"
+						aria-label="Cerrar menú"
+						className="
+			fixed top-16 left-0 right-0 bottom-0
+			bg-black/20
+			backdrop-blur-sm
+			z-40
+		"
+						onClick={() => setIsOpen(false)}
+					/>
+				)}
+
+				<div
+					className={`
+						absolute top-full left-0 w-full z-50
+						overflow-hidden
+						transition-all duration-300
+						bg-secondary backdrop-blur-sm
+						border-t border-white/10
+						shadow-xl
+
+						${isOpen ? "max-h-96 " : "max-h-0"}
+					`}
+				>
+					<nav className="py-2">
+						<ul className="flex flex-col gap-1">
+							{navItems.map((item) => (
+								<li key={item.title}>
+									<NavLink
+										to={item.path}
+										onClick={() => setIsOpen(false)}
+										className={({ isActive }) =>
+											`
+												relative flex items-center gap-3
+												px-4 py-3
+												font-semibold
+												transition-colors
+
+												${
+													isActive
+														? "bg-white/10 text-white"
+														: "text-neutral-300 hover:bg-white/5 hover:text-white"
+												}
+											`
+										}
+									>
+										{({ isActive }) => (
+											<>
+												{isActive && (
+													<span className="absolute left-0 top-0 h-full w-1 bg-primary rounded-r-full" />
+												)}
+
+												<span className={isActive ? "text-primary" : ""}>
+													{item.icon}
+												</span>
+
+												<span>{item.title}</span>
+											</>
+										)}
+									</NavLink>
+								</li>
+							))}
+						</ul>
+					</nav>
+				</div>
+			</div>
 
 			<header
 				className={`
-                bg-secondary h-full min-h-screen w-64 fixed lg:static z-40
+                hidden lg:flex flex-col bg-secondary h-full min-h-screen w-64 z-40
                 transition-transform duration-300
                 ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
             `}

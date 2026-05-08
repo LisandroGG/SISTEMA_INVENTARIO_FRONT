@@ -16,7 +16,7 @@ const initialState: ProductState = {
 	page: 1,
 	totalPages: 1,
 	totalItems: 0,
-	limit: 8,
+	limit: 10,
 	hasNext: false,
 	hasPrev: false,
 };

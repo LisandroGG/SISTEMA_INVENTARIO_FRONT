@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 
 const Layout = () => {
 	return (
-		<div className="flex min-h-screen">
+		<div className="flex flex-col lg:flex-row min-h-screen">
 			<aside>
 				<Nav />
 			</aside>

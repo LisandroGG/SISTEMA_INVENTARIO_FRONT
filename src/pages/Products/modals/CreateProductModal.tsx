@@ -6,6 +6,7 @@ import { createProduct } from "@redux/features/products/productThunks";
 import type { RootState } from "@redux/store";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import ImageCropModal from "./ImageCropModal";
 
 type CreateProductModalProps = {
 	open: boolean;
@@ -15,6 +16,9 @@ type CreateProductModalProps = {
 const CreateProductModal = ({ open, onCancel }: CreateProductModalProps) => {
 	const { categories } = useSelector((state: RootState) => state.categories);
 	const { run } = useCrudDispatch();
+
+	const [cropModalOpen, setCropModalOpen] = useState(false);
+	const [tempImage, setTempImage] = useState("");
 
 	const [name, setName] = useState("");
 	const [price, setPrice] = useState("");
@@ -99,7 +103,24 @@ const CreateProductModal = ({ open, onCancel }: CreateProductModalProps) => {
 					label="Imagen"
 					type="file"
 					accept="image/*"
-					onChange={(e) => setImg(e.target.files?.[0] || null)}
+					onChange={(e) => {
+						const file = e.target.files?.[0];
+
+						if (!file) return;
+
+						const imageUrl = URL.createObjectURL(file);
+						setTempImage(imageUrl);
+						setCropModalOpen(true);
+					}}
+				/>
+				<ImageCropModal
+					open={cropModalOpen}
+					image={tempImage}
+					onCancel={() => setCropModalOpen(false)}
+					onConfirm={(file) => {
+						setImg(file);
+						setCropModalOpen(false);
+					}}
 				/>
 			</div>
 		</Modal>

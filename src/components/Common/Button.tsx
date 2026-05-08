@@ -1,5 +1,3 @@
-import clsx from "clsx";
-
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 	text?: string;
 	variant?: "primary" | "secondary" | "danger" | "ghost";
@@ -24,7 +22,7 @@ const Button = ({
 	};
 
 	return (
-		<button {...rest} className={clsx(base, variants[variant], className)}>
+		<button {...rest} className={`${base} ${variants[variant]} ${className}`}>
 			{text || children}
 		</button>
 	);
