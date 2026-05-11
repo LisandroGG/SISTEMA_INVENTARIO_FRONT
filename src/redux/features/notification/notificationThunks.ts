@@ -18,6 +18,21 @@ export const getAllNotifications = createAsyncThunk<
 	}
 });
 
+export const getUnreadCount = createAsyncThunk<
+	number,
+	void,
+	{ rejectValue: string }
+>("notifications/getUnreadCount", async (_, { rejectWithValue }) => {
+	try {
+		const response = await axios.get<number>("/notifications/unread");
+		return response.data;
+	} catch (error) {
+		return rejectWithValue(
+			getErrorMessage(error, "Error al obtener notificaciones no leidas"),
+		);
+	}
+});
+
 export const markNotificationAsRead = createAsyncThunk<
 	NotificationResponse,
 	number,

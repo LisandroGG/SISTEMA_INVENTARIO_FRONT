@@ -12,6 +12,7 @@ export type Notification = {
 
 export type NotificationState = {
 	notifications: Notification[];
+	unreadCount: number;
 	loading: boolean;
 	error: string | null;
 };

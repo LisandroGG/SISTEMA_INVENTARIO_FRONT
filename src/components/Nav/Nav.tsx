@@ -1,3 +1,5 @@
+import { getUnreadCount } from "@redux/features/notification/notificationThunks";
+import type { AppDispatch, RootState } from "@redux/store";
 import {
 	Archive,
 	ArrowLeftRight,
@@ -8,11 +10,21 @@ import {
 	ShoppingCart,
 	X,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 const Nav = () => {
 	const [isOpen, setIsOpen] = useState(false);
+	const dispatch = useDispatch<AppDispatch>();
+	const { unreadCount } = useSelector(
+		(state: RootState) => state.notifications,
+	);
+
+	// biome-ignore lint: useEffectBug
+	useEffect(() => {
+		dispatch(getUnreadCount());
+	}, []);
 
 	const navItems = [
 		{
@@ -123,6 +135,11 @@ const Nav = () => {
 												</span>
 
 												<span>{item.title}</span>
+												{item.title === "Notificaciones" && unreadCount > 0 && (
+													<span className="mr-4 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+														{unreadCount}
+													</span>
+												)}
 											</>
 										)}
 									</NavLink>
@@ -171,6 +188,11 @@ const Nav = () => {
 												{item.icon}
 											</span>
 											<span>{item.title}</span>
+											{item.title === "Notificaciones" && unreadCount > 0 && (
+												<span className="mr-4 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+													{unreadCount}
+												</span>
+											)}
 										</>
 									)}
 								</NavLink>
