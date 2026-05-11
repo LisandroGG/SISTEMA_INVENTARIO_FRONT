@@ -46,10 +46,11 @@ const Nav = () => {
 						</h1>
 					</div>
 
-					<button
-						type="button"
-						onClick={() => setIsOpen(!isOpen)}
-						className="
+					<div className="pr-3">
+						<button
+							type="button"
+							onClick={() => setIsOpen(!isOpen)}
+							className="
 							text-white
 							bg-white/10
 							hover:bg-white/20
@@ -57,9 +58,10 @@ const Nav = () => {
 							p-2
 							rounded-md
 						"
-					>
-						{isOpen ? <X size={20} /> : <Menu size={20} />}
-					</button>
+						>
+							{isOpen ? <X size={20} /> : <Menu size={20} />}
+						</button>
+					</div>
 				</div>
 
 				{isOpen && (

@@ -1,7 +1,6 @@
 export type Category = {
 	id: number;
 	name: string;
-	description?: string;
 	totalProducts?: number;
 };
 
@@ -45,11 +44,9 @@ export type DeleteCategoryResponse = {
 
 export type CreateCategoryData = {
 	name: string;
-	description?: string;
 };
 
 export type UpdateCategoryData = {
 	id: number;
 	name: string;
-	description?: string;
 };

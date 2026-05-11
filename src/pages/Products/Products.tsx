@@ -95,9 +95,23 @@ const Products = () => {
 								})),
 							]}
 						/>
+						{(nameValue || categoryValue) && (
+							<Button
+								variant="ghost"
+								title="Limpiar filtros"
+								onClick={() => {
+									setNameValue("");
+									setCategoryValue("");
+									applyFilters({});
+								}}
+							>
+								Limpiar filtros
+							</Button>
+						)}
 					</div>
 					<Button
 						className="flex items-center gap-2"
+						title="Crear producto"
 						onClick={() => openModal("create")}
 					>
 						<SquarePlus size={20} />

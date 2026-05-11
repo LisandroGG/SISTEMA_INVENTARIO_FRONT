@@ -25,6 +25,7 @@ const Pagination = ({
 		<div className="flex items-center justify-center gap-1">
 			<Button
 				variant="ghost"
+				title="Primera página"
 				disabled={!hasPrev}
 				onClick={() => onPageChange(1)}
 				aria-label="Primera página"
@@ -33,6 +34,7 @@ const Pagination = ({
 			</Button>
 			<Button
 				variant="ghost"
+				title="Página anterior"
 				disabled={page === 1}
 				onClick={() => onPageChange(page - 1)}
 				aria-label="Anterior página"
@@ -44,6 +46,7 @@ const Pagination = ({
 			</span>
 			<Button
 				variant="ghost"
+				title="Siguiente página"
 				disabled={!hasNext}
 				onClick={() => onPageChange(page + 1)}
 				aria-label="Siguiente página"
@@ -52,6 +55,7 @@ const Pagination = ({
 			</Button>
 			<Button
 				variant="ghost"
+				title="Última página"
 				disabled={page === totalPages}
 				onClick={() => onPageChange(totalPages)}
 				aria-label="Ultima página"

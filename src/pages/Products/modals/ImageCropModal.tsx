@@ -74,7 +74,7 @@ const ImageCropModal = ({
 
 				<input
 					type="range"
-					className=""
+					className="accent-primary"
 					min={1}
 					max={3}
 					step={0.1}

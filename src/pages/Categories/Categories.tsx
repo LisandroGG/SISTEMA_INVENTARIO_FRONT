@@ -55,18 +55,12 @@ const Categories = () => {
 	const columns = [
 		{
 			key: "name",
-			label: "NOMBRE DE CATEGORÍA",
+			label: "NOMBRE",
 			width: "w-[30%]",
 		},
 		{
-			key: "description",
-			label: "DESCRIPCIÓN",
-			width: "w-[50%]",
-			render: (item: Category) => item.description || "Sin descripción",
-		},
-		{
 			key: "totalProducts",
-			label: "TOTAL DE PRODUCTOS",
+			label: "PRODUCTOS",
 			width: "w-[15%]",
 			render: (item: Category) => item.totalProducts || 0,
 		},
@@ -75,10 +69,18 @@ const Categories = () => {
 	const renderActions = (category: Category) => {
 		return (
 			<>
-				<Button variant="primary" onClick={() => openModal("edit", category)}>
+				<Button
+					variant="primary"
+					title="Editar"
+					onClick={() => openModal("edit", category)}
+				>
 					<Pencil size={12} />
 				</Button>
-				<Button variant="danger" onClick={() => openModal("delete", category)}>
+				<Button
+					variant="danger"
+					title="Eliminar"
+					onClick={() => openModal("delete", category)}
+				>
 					<Trash size={12} />
 				</Button>
 			</>
@@ -98,6 +100,7 @@ const Categories = () => {
 					/>
 					<Button
 						className="flex items-center gap-2"
+						title="Crear categoria"
 						onClick={() => openModal("create")}
 					>
 						<SquarePlus size={20} />

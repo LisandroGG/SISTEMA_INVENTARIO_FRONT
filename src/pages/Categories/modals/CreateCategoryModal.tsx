@@ -13,7 +13,6 @@ const CreateCategoryModal = ({ open, onCancel }: CreateCategoryModalProps) => {
 	const { run } = useCrudDispatch();
 
 	const [name, setName] = useState("");
-	const [description, setDescription] = useState("");
 	const [error, setError] = useState("");
 
 	const isValid = name.trim() !== "";
@@ -27,7 +26,6 @@ const CreateCategoryModal = ({ open, onCancel }: CreateCategoryModalProps) => {
 		try {
 			await run(createCategory, {
 				name: name.trim(),
-				description: description.trim() || undefined,
 			});
 			onCancel();
 		} catch {}
@@ -50,12 +48,6 @@ const CreateCategoryModal = ({ open, onCancel }: CreateCategoryModalProps) => {
 					placeholder="Nombre de la categoría"
 					value={name}
 					onChange={(e) => setName(e.target.value)}
-				/>
-				<Input
-					label="Descripción"
-					placeholder="Descripción de la categoría"
-					value={description}
-					onChange={(e) => setDescription(e.target.value)}
 				/>
 			</div>
 		</Modal>

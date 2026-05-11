@@ -1,11 +1,14 @@
+import Button from "@components/Common/Button";
 import Loading from "@components/Common/Loading";
 import Pagination from "@components/Common/Pagination.jsx";
 import Section from "@components/Common/Section";
+import Select from "@components/Common/Select";
 import Table from "@components/Common/Table";
 import usePagination from "@hooks/usePagination.js";
 import { getAllMovements } from "@redux/features/movement/movementThunks";
 import type { Movement } from "@redux/features/movement/movementTypes";
 import type { RootState } from "@redux/store";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 
 const Movements = () => {
@@ -20,6 +23,40 @@ const Movements = () => {
 		goToPage,
 		applyFilters,
 	} = usePagination((state) => state.movements, getAllMovements);
+
+	const [localFilters, setLocalFilters] = useState({
+		type: "",
+		dateFrom: "",
+		dateTo: "",
+	});
+
+	const handleFilterChange = (key: string, value: string) => {
+		let processedValue = value;
+
+		if (key === "dateFrom" && value) {
+			const [year, month, day] = value.split("-").map(Number);
+			const date = new Date(year, month - 1, day, 0, 0, 0, 0);
+			processedValue = date.toISOString();
+		}
+		if (key === "dateTo" && value) {
+			const [year, month, day] = value.split("-").map(Number);
+			const date = new Date(year, month - 1, day, 23, 59, 59, 999);
+			processedValue = date.toISOString();
+		}
+
+		const newFilters = { ...localFilters, [key]: processedValue };
+		setLocalFilters({ ...localFilters, [key]: value });
+		applyFilters(
+			Object.fromEntries(
+				Object.entries(newFilters).filter(([_, v]) => v !== ""),
+			),
+		);
+	};
+
+	const handleClearFilters = () => {
+		setLocalFilters({ type: "", dateFrom: "", dateTo: "" });
+		applyFilters({});
+	};
 
 	if (loading) {
 		return (
@@ -60,7 +97,6 @@ const Movements = () => {
 							month: "2-digit",
 							year: "numeric",
 							hour12: false,
-							weekday: "long",
 						})
 					: "-",
 		},
@@ -80,7 +116,44 @@ const Movements = () => {
 	return (
 		<Section>
 			<div className="flex flex-col min-h-[93vh]">
-				<div className="mb-4">Busqueda</div>
+				<div className="mb-4">
+					<div className="flex flex-col md:flex-row gap-2">
+						<Select
+							value={localFilters.type}
+							onChange={(val) => handleFilterChange("type", val)}
+							options={[
+								{ value: "", label: "Todos los tipos" },
+								{ value: "IN", label: "Entrada" },
+								{ value: "OUT", label: "Salida" },
+							]}
+						/>
+						<div className="flex items-center gap-2 border border-neutral-300 rounded-md px-3 py-1.5">
+							<span className="text-xs text-neutral-400">Desde</span>
+							<input
+								type="date"
+								value={localFilters.dateFrom}
+								onChange={(e) => handleFilterChange("dateFrom", e.target.value)}
+								className="text-sm outline-none bg-transparent"
+							/>
+						</div>
+						<div className="flex items-center gap-2 border border-neutral-300 rounded-md px-3 py-1.5">
+							<span className="text-xs text-neutral-400">Hasta</span>
+							<input
+								type="date"
+								value={localFilters.dateTo}
+								onChange={(e) => handleFilterChange("dateTo", e.target.value)}
+								className="text-sm outline-none bg-transparent"
+							/>
+						</div>
+						{(localFilters.type ||
+							localFilters.dateFrom ||
+							localFilters.dateTo) && (
+							<Button variant="ghost" onClick={handleClearFilters}>
+								Limpiar filtros
+							</Button>
+						)}
+					</div>
+				</div>
 				<div className="flex-1">
 					<Table
 						columns={columns}

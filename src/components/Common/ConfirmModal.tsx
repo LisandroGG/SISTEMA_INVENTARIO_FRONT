@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import Button from "./Button";
+
 type ConfirmModalProps = {
 	open: boolean;
 	title?: string;
@@ -6,8 +9,6 @@ type ConfirmModalProps = {
 	onConfirm: () => void;
 };
 
-import Button from "./Button";
-
 const ConfirmModal = ({
 	open,
 	title = "¿Estás seguro?",
@@ -15,6 +16,15 @@ const ConfirmModal = ({
 	onCancel,
 	onConfirm,
 }: ConfirmModalProps) => {
+	useEffect(() => {
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (e.key === "Escape") onCancel();
+			if (e.key === "Enter") onConfirm();
+		};
+
+		document.addEventListener("keydown", handleKeyDown);
+		return () => document.removeEventListener("keydown", handleKeyDown);
+	}, [onCancel, onConfirm]);
 	if (!open) return null;
 
 	return (

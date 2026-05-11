@@ -19,13 +19,11 @@ const EditCategoryModal = ({
 	const { run } = useCrudDispatch();
 
 	const [name, setName] = useState("");
-	const [description, setDescription] = useState("");
 	const [error, setError] = useState("");
 
 	useEffect(() => {
 		if (open && data) {
 			setName(data.name);
-			setDescription(data.description || "");
 			setError("");
 		}
 	}, [open, data]);
@@ -34,8 +32,8 @@ const EditCategoryModal = ({
 
 	const hasChanges = useMemo(() => {
 		if (!data) return false;
-		return name !== data.name || description !== (data.description || "");
-	}, [name, description, data]);
+		return name !== data.name;
+	}, [name, data]);
 
 	const handleSubmit = async () => {
 		if (!isValid) {
@@ -48,7 +46,6 @@ const EditCategoryModal = ({
 			await run(updateCategory, {
 				id: data.id,
 				name: name.trim(),
-				description: description.trim() || undefined,
 			});
 			onCancel();
 		} catch {}
@@ -71,12 +68,6 @@ const EditCategoryModal = ({
 					placeholder="Nombre de la categoría"
 					value={name}
 					onChange={(e) => setName(e.target.value)}
-				/>
-				<Input
-					label="Descripción"
-					placeholder="Descripción de la categoría"
-					value={description}
-					onChange={(e) => setDescription(e.target.value)}
 				/>
 			</div>
 		</Modal>

@@ -1,5 +1,6 @@
 import Button from "@components/Common/Button";
 import ErrorMessage from "@components/Common/ErrorMessage";
+import { useEffect } from "react";
 
 type ModalProps = {
 	title: string;
@@ -22,6 +23,15 @@ const Modal = ({
 	disabled,
 	error,
 }: ModalProps) => {
+	useEffect(() => {
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (e.key === "Escape") onCancel();
+			if (e.key === "Enter" && !disabled) onSubmit();
+		};
+
+		document.addEventListener("keydown", handleKeyDown);
+		return () => document.removeEventListener("keydown", handleKeyDown);
+	}, [onCancel, onSubmit, disabled]);
 	return (
 		<div className="fixed inset-0 z-50 grid place-content-center">
 			<button
@@ -46,6 +56,7 @@ const Modal = ({
 						text="Cancelar"
 						variant="ghost"
 						onClick={onCancel}
+						title="Cancelar"
 					/>
 					<Button
 						className="w-full"
@@ -53,6 +64,7 @@ const Modal = ({
 						variant={buttonVariant}
 						onClick={onSubmit}
 						disabled={disabled}
+						title="Confirmar"
 					/>
 				</div>
 			</div>
