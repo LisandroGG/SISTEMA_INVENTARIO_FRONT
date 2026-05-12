@@ -24,6 +24,12 @@ const Nav = () => {
 	// biome-ignore lint: useEffectBug
 	useEffect(() => {
 		dispatch(getUnreadCount());
+
+		const interval = setInterval(() => {
+			dispatch(getUnreadCount());
+		}, 30000);
+
+		return () => clearInterval(interval);
 	}, []);
 
 	const navItems = [
@@ -71,7 +77,16 @@ const Nav = () => {
 							rounded-md
 						"
 						>
-							{isOpen ? <X size={20} /> : <Menu size={20} />}
+							{isOpen ? (
+								<X size={20} />
+							) : (
+								<div>
+									<Menu size={20} />
+									{unreadCount > 0 && (
+										<span className="absolute top-2.5 right-5.5 bg-primary rounded-full w-3 h-3 flex items-center justify-center" />
+									)}
+								</div>
+							)}
 						</button>
 					</div>
 				</div>
@@ -136,7 +151,7 @@ const Nav = () => {
 
 												<span>{item.title}</span>
 												{item.title === "Notificaciones" && unreadCount > 0 && (
-													<span className="mr-4 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+													<span className="ml-auto mr-4 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
 														{unreadCount}
 													</span>
 												)}
@@ -189,7 +204,7 @@ const Nav = () => {
 											</span>
 											<span>{item.title}</span>
 											{item.title === "Notificaciones" && unreadCount > 0 && (
-												<span className="mr-4 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+												<span className="ml-auto mr-4 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
 													{unreadCount}
 												</span>
 											)}
