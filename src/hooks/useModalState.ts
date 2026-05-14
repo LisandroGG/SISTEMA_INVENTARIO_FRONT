@@ -1,6 +1,12 @@
 import { useState } from "react";
 
-type ModalType = "create" | "edit" | "delete" | "adjust-stock";
+type ModalType =
+	| "create"
+	| "edit"
+	| "delete"
+	| "adjust-stock"
+	| "mark-all"
+	| "mark-read";
 
 type ModalState<T> = {
 	type: ModalType;

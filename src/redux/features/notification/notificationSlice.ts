@@ -13,6 +13,12 @@ const initialState: NotificationState = {
 	unreadCount: 0,
 	loading: false,
 	error: null,
+	page: 1,
+	totalPages: 1,
+	totalItems: 0,
+	limit: 9,
+	hasNext: false,
+	hasPrev: false,
 };
 
 const notificationSlice = createSlice({
@@ -28,7 +34,12 @@ const notificationSlice = createSlice({
 			})
 			.addCase(getAllNotifications.fulfilled, (state, action) => {
 				state.loading = false;
-				state.notifications = action.payload;
+				state.notifications = action.payload.data;
+				state.page = action.payload.page;
+				state.totalPages = action.payload.totalPages;
+				state.totalItems = action.payload.totalItems;
+				state.hasNext = action.payload.hasNext;
+				state.hasPrev = action.payload.hasPrev;
 			})
 			.addCase(getAllNotifications.rejected, (state, action) => {
 				state.loading = false;

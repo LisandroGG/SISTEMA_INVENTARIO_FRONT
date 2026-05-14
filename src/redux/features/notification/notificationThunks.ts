@@ -1,15 +1,23 @@
 import axios from "@api/axiosInstance";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getErrorMessage } from "@utils/errorHandler";
-import type { Notification, NotificationResponse } from "./notificationTypes";
+import type {
+	GetNotificationsResponse,
+	NotificationResponse,
+} from "./notificationTypes";
 
 export const getAllNotifications = createAsyncThunk<
-	Notification[],
-	void,
+	GetNotificationsResponse,
+	Record<string, unknown>,
 	{ rejectValue: string }
->("notifications/getAllNotifications", async (_, { rejectWithValue }) => {
+>("notifications/getAllNotifications", async (params, { rejectWithValue }) => {
 	try {
-		const response = await axios.get<Notification[]>("/notifications");
+		const response = await axios.get<GetNotificationsResponse>(
+			"/notifications",
+			{
+				params,
+			},
+		);
 		return response.data;
 	} catch (error) {
 		return rejectWithValue(

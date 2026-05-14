@@ -15,6 +15,22 @@ export type NotificationState = {
 	unreadCount: number;
 	loading: boolean;
 	error: string | null;
+	page: number;
+	totalPages: number;
+	totalItems: number;
+	limit: number;
+	hasNext: boolean;
+	hasPrev: boolean;
+};
+
+export type GetNotificationsResponse = {
+	data: Notification[];
+	page: number;
+	totalPages: number;
+	totalItems: number;
+	limit: number;
+	hasNext: boolean;
+	hasPrev: boolean;
 };
 
 export type NotificationResponse = {
