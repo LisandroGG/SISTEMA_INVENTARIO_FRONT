@@ -28,6 +28,21 @@ export const getAllProducts = createAsyncThunk<
 	}
 });
 
+export const getAllProductsNoPagination = createAsyncThunk<
+	Product[],
+	void,
+	{ rejectValue: string }
+>("products/getAllProductsNoPagination", async (_, { rejectWithValue }) => {
+	try {
+		const response = await axios.get<Product[]>("/products/no-pagination");
+		return response.data;
+	} catch (error) {
+		return rejectWithValue(
+			getErrorMessage(error, "Error al obtener productos"),
+		);
+	}
+});
+
 export const getProductById = createAsyncThunk<
 	Product,
 	number,

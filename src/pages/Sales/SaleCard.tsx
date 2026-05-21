@@ -33,7 +33,7 @@ const SaleCard = ({ sale }: SaleCardProps) => {
 			</div>
 			<div className="flex-1 min-w-0">
 				<span className="text-sm font-semibold text-neutral-800">
-					Venta #{sale.id}
+					Venta #{sale.id} - {sale.clientName}
 				</span>
 				<p className="text-sm text-neutral-600">
 					{sale.items.length}{" "}

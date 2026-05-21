@@ -18,6 +18,7 @@ export type SaleItem = {
 
 export type Sale = {
 	id: number;
+	clientName: string;
 	status: "completed" | "cancelled";
 	total: number;
 	notes?: string;
@@ -67,4 +68,5 @@ export type CreateSaleItem = {
 
 export type CreateSaleData = {
 	items: CreateSaleItem[];
+	clientName: string;
 };

@@ -2,7 +2,7 @@ type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
 	label?: string;
 };
 
-const Input = ({ label, id, ...rest }: InputProps) => {
+const Input = ({ label, id, className, ...rest }: InputProps) => {
 	return (
 		<div className="flex flex-col gap-1">
 			{label && (
@@ -13,7 +13,7 @@ const Input = ({ label, id, ...rest }: InputProps) => {
 			<input
 				id={id}
 				{...rest}
-				className="border rounded-sm p-1 bg-white transition-all font-medium"
+				className={`border rounded-sm p-1 bg-white transition-all font-medium ${className}`}
 			/>
 		</div>
 	);

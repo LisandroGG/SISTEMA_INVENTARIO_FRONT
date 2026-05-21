@@ -3,6 +3,7 @@ import {
 	createProduct,
 	deleteProduct,
 	getAllProducts,
+	getAllProductsNoPagination,
 	getProductById,
 	updateProduct,
 } from "./productThunks";
@@ -43,6 +44,19 @@ const productSlice = createSlice({
 				state.hasPrev = action.payload.hasPrev;
 			})
 			.addCase(getAllProducts.rejected, (state, action) => {
+				state.loading = false;
+				state.error = action.payload ?? "Error al obtener productos";
+			})
+			//GET ALL PRODUCTS NO PAGINATION
+			.addCase(getAllProductsNoPagination.pending, (state) => {
+				state.loading = true;
+				state.error = null;
+			})
+			.addCase(getAllProductsNoPagination.fulfilled, (state, action) => {
+				state.loading = false;
+				state.products = action.payload;
+			})
+			.addCase(getAllProductsNoPagination.rejected, (state, action) => {
 				state.loading = false;
 				state.error = action.payload ?? "Error al obtener productos";
 			})

@@ -1,22 +1,20 @@
 import Button from "@components/Common/Button";
-import ConfirmModal from "@components/Common/ConfirmModal";
 import Loading from "@components/Common/Loading";
 import Pagination from "@components/Common/Pagination.jsx";
 import Section from "@components/Common/Section";
 import Select from "@components/Common/Select";
-import useCrudDispatch from "@hooks/useCrudDispatch.js";
 import useModalState from "@hooks/useModalState";
 import usePagination from "@hooks/usePagination.js";
-import { createSale, getAllSales } from "@redux/features/sale/saleThunks";
+import { getAllSales } from "@redux/features/sale/saleThunks";
 import type { RootState } from "@redux/store";
 import { SquarePlus } from "lucide-react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import CreateSaleModal from "./modals/CreateSaleModal";
 import SaleCard from "./SaleCard";
 
 const Sales = () => {
 	const { sales } = useSelector((state: RootState) => state.sales);
-	const { run } = useCrudDispatch();
 	const { openModal, closeModal, isOpen, modalState } = useModalState<{
 		id?: number;
 	}>();
@@ -101,6 +99,7 @@ const Sales = () => {
 					/>
 				</div>
 			</div>
+			<CreateSaleModal open={isOpen("create")} onCancel={closeModal} />
 		</Section>
 	);
 };
