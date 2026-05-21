@@ -1,6 +1,6 @@
 import Button from "@components/Common/Button";
 import type { Notification } from "@redux/features/notification/notificationTypes";
-import { Bell, Check, Trash } from "lucide-react";
+import { Bell, Check, Settings, Trash } from "lucide-react";
 
 const notificationTypeLabel: Record<string, string> = {
 	low_stock: "Stock bajo",
@@ -16,6 +16,13 @@ const notificationTypeColor: Record<string, string> = {
 	sale_canceled: "bg-red-500/10 text-red-500",
 };
 
+const notificationTypeIcon: Record<string, React.ReactNode> = {
+	low_stock: <Bell size={16} />,
+	sale_completed: <Check size={16} />,
+	adjustment: <Settings size={16} />,
+	sale_canceled: <Trash size={16} />,
+};
+
 type NotificationItemProps = {
 	notification: Notification;
 	onMarkAsRead: (id: number) => void;
@@ -29,12 +36,12 @@ const NotificationItem = ({
 }: NotificationItemProps) => {
 	return (
 		<div
-			className={`flex items-center gap-4 p-4 rounded-lg border transition-colors ${notification.read ? "bg-white border-neutral-200" : "bg-primary/5 border-primary/20"}`}
+			className={`flex items-center gap-4 p-4 shadow-md rounded-lg border transition-colors ${notification.read ? "bg-white border-neutral-200" : "bg-primary/5 border-primary/20"}`}
 		>
 			<div
 				className={`p-2 rounded-full shrink-0 ${notificationTypeColor[notification.type] ?? "bg-neutral-100 text-neutral-600"}`}
 			>
-				<Bell size={16} />
+				{notificationTypeIcon[notification.type] ?? <Bell size={16} />}
 			</div>
 
 			<div className="flex-1 min-w-0">

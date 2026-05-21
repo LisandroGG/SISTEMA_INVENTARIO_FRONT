@@ -6,7 +6,8 @@ type ModalType =
 	| "delete"
 	| "adjust-stock"
 	| "mark-all"
-	| "mark-read";
+	| "mark-read"
+	| "cancel";
 
 type ModalState<T> = {
 	type: ModalType;

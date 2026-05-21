@@ -10,7 +10,7 @@ const initialState: SaleState = {
 	page: 1,
 	totalPages: 1,
 	totalItems: 0,
-	limit: 9,
+	limit: 7,
 	hasNext: false,
 	hasPrev: false,
 };
