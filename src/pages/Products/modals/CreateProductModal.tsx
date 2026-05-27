@@ -4,6 +4,7 @@ import Select from "@components/Common/Select";
 import useCrudDispatch from "@hooks/useCrudDispatch";
 import { createProduct } from "@redux/features/products/productThunks";
 import type { RootState } from "@redux/store";
+import { validateCreateProduct } from "@utils/validations/productValidations";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import ImageCropModal from "./ImageCropModal";
@@ -22,30 +23,55 @@ const CreateProductModal = ({ open, onCancel }: CreateProductModalProps) => {
 
 	const [name, setName] = useState("");
 	const [price, setPrice] = useState("");
-	const [description, setDescription] = useState("");
 	const [categoryId, setCategoryId] = useState("");
 	const [error, setError] = useState("");
 	const [img, setImg] = useState<File | null>(null);
 	const [quantity, setQuantity] = useState("");
 
-	const isValid = name.trim() !== "" && price !== "" && categoryId !== "";
+	const isValid =
+		name.trim() !== "" &&
+		price.trim() !== "" &&
+		quantity.trim() !== "" &&
+		categoryId.trim() !== "";
+
+	const clearFields = () => {
+		setName("");
+		setPrice("");
+		setCategoryId("");
+		setQuantity("");
+		setError("");
+	};
+
+	const handleCancel = () => {
+		clearFields();
+		onCancel();
+	};
 
 	const handleSubmit = async () => {
-		if (!isValid) {
-			setError("Nombre, precio y categoría son obligatorios");
+		const validationError = validateCreateProduct(
+			name,
+			price,
+			quantity,
+			Number(categoryId),
+		);
+
+		if (validationError) {
+			setError(validationError);
 			return;
 		}
+
+		setError("");
 
 		try {
 			await run(createProduct, {
 				name: name.trim(),
 				price: Number(price),
 				img: img || undefined,
-				description: description.trim() || undefined,
 				categoryId: Number(categoryId),
-				quantity: Number(quantity) || undefined,
+				quantity: Number(quantity),
 			});
-			onCancel();
+
+			clearFields();
 		} catch {}
 	};
 
@@ -55,7 +81,7 @@ const CreateProductModal = ({ open, onCancel }: CreateProductModalProps) => {
 		<Modal
 			title="Nuevo producto"
 			confirmText="Crear"
-			onCancel={onCancel}
+			onCancel={handleCancel}
 			onSubmit={handleSubmit}
 			disabled={!isValid}
 			error={error}
@@ -74,23 +100,17 @@ const CreateProductModal = ({ open, onCancel }: CreateProductModalProps) => {
 					value={price}
 					onChange={(e) => setPrice(e.target.value)}
 				/>
-				<Input
-					label="Descripción"
-					placeholder="Descripción (opcional)"
-					value={description}
-					onChange={(e) => setDescription(e.target.value)}
-				/>
 				<Select
 					label="Categoría"
 					value={categoryId}
 					onChange={(val) => setCategoryId(val)}
 					options={[
-						{ value: "", label: "Seleccionar categoría" },
 						...categories.map((c) => ({
 							value: String(c.id),
 							label: c.name,
 						})),
 					]}
+					placeholder="Seleccione una categoria"
 				/>
 				<Input
 					label="Cantidad"

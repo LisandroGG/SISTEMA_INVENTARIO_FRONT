@@ -115,17 +115,17 @@ const Movements = () => {
 
 	return (
 		<Section>
-			<div className="flex flex-col min-h-[93vh]">
+			<div className="flex flex-col min-h-[93vh] animate-fadeInToBottom">
 				<div className="mb-4">
 					<div className="flex flex-col md:flex-row gap-2">
 						<Select
 							value={localFilters.type}
 							onChange={(val) => handleFilterChange("type", val)}
 							options={[
-								{ value: "", label: "Todos los tipos" },
 								{ value: "IN", label: "Entrada" },
 								{ value: "OUT", label: "Salida" },
 							]}
+							placeholder="Filtrar por tipo"
 						/>
 						<div className="flex items-center gap-2 border border-neutral-300 rounded-md px-3 py-1.5">
 							<span className="text-xs text-neutral-400">Desde</span>

@@ -43,6 +43,7 @@ export type GetSalesParams = {
 	page?: number;
 	limit?: number;
 	status?: string;
+	clientName?: string;
 };
 
 export type GetSalesResponse = {

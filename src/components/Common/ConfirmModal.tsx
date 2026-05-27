@@ -35,7 +35,7 @@ const ConfirmModal = ({
 				onClick={onCancel}
 				aria-label="Cerrar modal"
 			/>
-			<div className="relative bg-neutral p-6 rounded-lg space-y-2">
+			<div className="relative bg-neutral p-6 rounded-lg space-y-2 animate-fadeIn">
 				<h3 className="font-bold text-lg">{title}</h3>
 				{description && <p>{description}</p>}
 				<div className="flex justify-center gap-2">

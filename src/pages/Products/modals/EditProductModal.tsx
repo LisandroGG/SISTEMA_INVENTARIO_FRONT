@@ -5,6 +5,7 @@ import useCrudDispatch from "@hooks/useCrudDispatch";
 import { updateProduct } from "@redux/features/products/productThunks";
 import type { Product } from "@redux/features/products/productTypes";
 import type { RootState } from "@redux/store";
+import { validateUpdateProduct } from "@utils/validations/productValidations";
 import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -20,7 +21,6 @@ const EditProductModal = ({ open, data, onCancel }: EditProductModalProps) => {
 
 	const [name, setName] = useState("");
 	const [price, setPrice] = useState("");
-	const [description, setDescription] = useState("");
 	const [categoryId, setCategoryId] = useState("");
 	const [error, setError] = useState("");
 	const [img, setImg] = useState<File | null>(null);
@@ -29,30 +29,37 @@ const EditProductModal = ({ open, data, onCancel }: EditProductModalProps) => {
 		if (open && data) {
 			setName(data.name);
 			setPrice(String(data.price));
-			setDescription(data.description || "");
 			setCategoryId(String(data.categoryId));
 			setImg(data.img ? null : null);
 			setError("");
 		}
 	}, [open, data]);
 
-	const isValid = name.trim() !== "" && price !== "" && categoryId !== "";
+	const isValid =
+		name.trim() !== "" && price.trim() !== "" && categoryId.trim() !== "";
 
 	const hasChanges = useMemo(() => {
 		if (!data) return false;
 		return (
 			name !== data.name ||
 			price !== String(data.price) ||
-			description !== (data.description || "") ||
 			categoryId !== String(data.categoryId)
 		);
-	}, [name, price, description, categoryId, data]);
+	}, [name, price, categoryId, data]);
 
 	const handleSubmit = async () => {
-		if (!isValid) {
-			setError("Nombre, precio y categoría son obligatorios");
+		const validationError = validateUpdateProduct(
+			name,
+			price,
+			Number(categoryId),
+		);
+
+		if (validationError) {
+			setError(validationError);
 			return;
 		}
+
+		setError("");
 
 		try {
 			if (!data) return;
@@ -60,7 +67,6 @@ const EditProductModal = ({ open, data, onCancel }: EditProductModalProps) => {
 				id: data?.id,
 				name: name.trim(),
 				price: Number(price),
-				description: description.trim() || undefined,
 				categoryId: Number(categoryId),
 				img: img || undefined,
 			});
@@ -93,23 +99,17 @@ const EditProductModal = ({ open, data, onCancel }: EditProductModalProps) => {
 					value={price}
 					onChange={(e) => setPrice(e.target.value)}
 				/>
-				<Input
-					label="Descripción"
-					placeholder="Descripción (opcional)"
-					value={description}
-					onChange={(e) => setDescription(e.target.value)}
-				/>
 				<Select
 					label="Categoría"
 					value={categoryId}
 					onChange={(val) => setCategoryId(val)}
 					options={[
-						{ value: "", label: "Seleccionar categoría" },
 						...categories.map((c) => ({
 							value: String(c.id),
 							label: c.name,
 						})),
 					]}
+					placeholder="Seleccione una categoria"
 				/>
 			</div>
 		</Modal>

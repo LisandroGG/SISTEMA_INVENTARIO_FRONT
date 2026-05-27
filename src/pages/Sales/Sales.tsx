@@ -1,6 +1,7 @@
 import Button from "@components/Common/Button";
 import Loading from "@components/Common/Loading";
 import Pagination from "@components/Common/Pagination.jsx";
+import SearchInput from "@components/Common/SearchInput";
 import Section from "@components/Common/Section";
 import Select from "@components/Common/Select";
 import useModalState from "@hooks/useModalState";
@@ -29,11 +30,20 @@ const Sales = () => {
 		applyFilters,
 	} = usePagination((state) => state.sales, getAllSales);
 
+	const [clientNameValue, setClientNameValue] = useState("");
 	const [statusValue, setStatusValue] = useState("");
+
+	const handleNameSearch = () => {
+		applyFilters({
+			...(clientNameValue && { clientName: clientNameValue }),
+			...(statusValue && { status: statusValue }),
+		});
+	};
 
 	const handleStatusChange = (status: string) => {
 		setStatusValue(status);
 		applyFilters({
+			...(clientNameValue && { clientName: clientNameValue }),
 			...(status && { status: status }),
 		});
 	};
@@ -48,9 +58,16 @@ const Sales = () => {
 
 	return (
 		<Section>
-			<div className="flex flex-col min-h-[93vh]">
+			<div className="flex flex-col min-h-[93vh] animate-fadeInToBottom">
 				<div className="flex flex-col gap-2 md:flex-row justify-between items-center mb-4">
 					<div className="flex flex-col md:flex-row gap-2">
+						<SearchInput
+							type="text"
+							placeholder="Buscar venta por cliente..."
+							value={clientNameValue}
+							onChange={(e) => setClientNameValue(e.target.value)}
+							onKeyDown={(e) => e.key === "Enter" && handleNameSearch()}
+						/>
 						<Select
 							value={statusValue}
 							onChange={(status) => handleStatusChange(status)}
@@ -60,11 +77,12 @@ const Sales = () => {
 							]}
 							placeholder="Filtrar por estado"
 						/>
-						{statusValue && (
+						{(clientNameValue || statusValue) && (
 							<Button
 								variant="ghost"
 								title="Limpiar filtros"
 								onClick={() => {
+									setClientNameValue("");
 									setStatusValue("");
 									applyFilters({});
 								}}

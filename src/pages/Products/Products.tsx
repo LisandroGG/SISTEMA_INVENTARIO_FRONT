@@ -74,7 +74,7 @@ const Products = () => {
 
 	return (
 		<Section>
-			<div className="flex flex-col min-h-[93vh]">
+			<div className="flex flex-col min-h-[93vh] animate-fadeInToBottom">
 				<div className="flex flex-col gap-2 md:flex-row justify-between items-center mb-4">
 					<div className="flex flex-col md:flex-row gap-2">
 						<SearchInput
@@ -88,12 +88,12 @@ const Products = () => {
 							value={categoryValue}
 							onChange={(val) => handleCategoryChange(val)}
 							options={[
-								{ value: "", label: "Todas las categorías" },
 								...categories.map((c) => ({
 									value: String(c.id),
 									label: c.name,
 								})),
 							]}
+							placeholder="Filtrar por categoria"
 						/>
 						{(nameValue || categoryValue) && (
 							<Button

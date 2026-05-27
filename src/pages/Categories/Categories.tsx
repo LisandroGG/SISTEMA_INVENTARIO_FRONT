@@ -89,7 +89,7 @@ const Categories = () => {
 
 	return (
 		<Section>
-			<div className="flex flex-col min-h-[93vh]">
+			<div className="flex flex-col min-h-[93vh] animate-fadeInToBottom">
 				<div className="flex flex-col gap-2 md:flex-row justify-between items-center mb-4">
 					<SearchInput
 						type="text"

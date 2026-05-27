@@ -38,7 +38,7 @@ const Notifications = () => {
 
 	return (
 		<Section>
-			<div className="flex flex-col min-h-[93vh]">
+			<div className="flex flex-col min-h-[93vh] animate-fadeInToBottom">
 				<div className="flex items-center justify-center md:justify-end mb-4">
 					<Button variant="primary" onClick={() => openModal("mark-all")}>
 						Marcar todas como leídas

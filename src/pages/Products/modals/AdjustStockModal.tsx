@@ -7,6 +7,7 @@ import {
 	adjustStock,
 	updateMinStockData,
 } from "@redux/features/stock/stockThunks";
+import { validateQuantity } from "@utils/validations/productValidations";
 import { useEffect, useMemo, useState } from "react";
 
 type AdjustStockModalProps = {
@@ -21,6 +22,7 @@ const AdjustStockModal = ({ open, data, onCancel }: AdjustStockModalProps) => {
 	const [quantity, setQuantity] = useState("");
 	const [minQuantity, setMinQuantity] = useState("");
 	const [reason, setReason] = useState("");
+	const [error, setError] = useState("");
 
 	useEffect(() => {
 		if (open && data) {
@@ -45,8 +47,22 @@ const AdjustStockModal = ({ open, data, onCancel }: AdjustStockModalProps) => {
 		);
 	}, [quantity, minQuantity, data]);
 
+	const handleCancel = () => {
+		setError("");
+		onCancel();
+	};
+
 	const handleSubmit = async () => {
 		if (!data) return;
+
+		const validationError = validateQuantity(quantity, minQuantity);
+
+		if (validationError) {
+			setError(validationError);
+			return;
+		}
+
+		setError("");
 
 		try {
 			if (stockChanged) {
@@ -74,9 +90,10 @@ const AdjustStockModal = ({ open, data, onCancel }: AdjustStockModalProps) => {
 		<Modal
 			title="Ajustar stock"
 			confirmText="Guardar"
-			onCancel={onCancel}
+			onCancel={handleCancel}
 			onSubmit={handleSubmit}
 			disabled={!hasChanges || (stockChanged && !reason)}
+			error={error}
 		>
 			<div className="flex flex-col gap-3 mb-3">
 				<Input
