@@ -56,7 +56,7 @@ export const cancelSale = createAsyncThunk<
 	{ rejectValue: string }
 >("sales/cancelSale", async (id, { rejectWithValue }) => {
 	try {
-		const response = await axios.post<SaleResponse>(`/sales/cancel/${id}`);
+		const response = await axios.put<SaleResponse>(`/sales/cancel/${id}`);
 		return response.data;
 	} catch (error) {
 		return rejectWithValue(getErrorMessage(error, "Error al cancelar venta"));

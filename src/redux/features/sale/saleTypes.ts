@@ -1,10 +1,7 @@
 export type Product = {
 	id: number;
 	name: string;
-	description?: string;
 	price: number;
-	img?: string;
-	categoryId: number;
 };
 
 export type SaleItem = {
@@ -32,6 +29,7 @@ export type SaleState = {
 	sales: Sale[];
 	sale: Sale | null;
 	loading: boolean;
+	detailLoading: boolean;
 	error: string | null;
 	page: number;
 	totalPages: number;

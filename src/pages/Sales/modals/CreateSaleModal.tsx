@@ -100,11 +100,14 @@ const CreateSaleModal = ({ open, onCancel }: CreateSaleModalProps) => {
 				/>
 
 				<div className="flex flex-col gap-3">
+					<div className="flex gap-36 text-md font-medium">
+						<span>Producto</span>
+						<span>Cantidad</span>
+					</div>
 					{items.map((item, index) => (
 						<div key={`${item.productId}`} className="flex items-end gap-2">
 							<div className="flex-1">
 								<Select
-									label="Producto"
 									value={String(item.productId)}
 									options={[
 										{
@@ -125,7 +128,6 @@ const CreateSaleModal = ({ open, onCancel }: CreateSaleModalProps) => {
 							<div className="w-28">
 								<Input
 									className="h-9.5"
-									label="Cantidad"
 									type="number"
 									min={1}
 									value={item.quantity}

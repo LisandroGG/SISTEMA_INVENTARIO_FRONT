@@ -1,7 +1,6 @@
 import Button from "@components/Common/Button";
 import type { Sale } from "@redux/features/sale/saleTypes";
 import { Check, ReceiptText, Trash } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 const statusLabel: Record<string, string> = {
 	completed: "Completada",
@@ -20,10 +19,10 @@ const statusIcon: Record<string, React.ReactNode> = {
 
 type SaleCardProps = {
 	sale: Sale;
+	onViewDetail: (id: number) => void;
 };
 
-const SaleCard = ({ sale }: SaleCardProps) => {
-	const navigate = useNavigate();
+const SaleCard = ({ sale, onViewDetail }: SaleCardProps) => {
 	return (
 		<div className="flex items-center gap-4 p-4 shadow-md rounded-lg border bg-white border-neutral-200">
 			<div
@@ -63,7 +62,7 @@ const SaleCard = ({ sale }: SaleCardProps) => {
 			<Button
 				variant="danger"
 				title="Ver detalle"
-				onClick={() => navigate(`/sales/${sale.id}`)}
+				onClick={() => onViewDetail(sale.id)}
 			>
 				<ReceiptText size={16} />
 			</Button>

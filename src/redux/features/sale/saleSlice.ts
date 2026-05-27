@@ -6,6 +6,7 @@ const initialState: SaleState = {
 	sales: [],
 	sale: null,
 	loading: false,
+	detailLoading: false,
 	error: null,
 	page: 1,
 	totalPages: 1,
@@ -41,15 +42,15 @@ const saleSlice = createSlice({
 			})
 			//GET SALE BY ID
 			.addCase(getSaleById.pending, (state) => {
-				state.loading = true;
+				state.detailLoading = true;
 				state.error = null;
 			})
 			.addCase(getSaleById.fulfilled, (state, action) => {
-				state.loading = false;
+				state.detailLoading = false;
 				state.sale = action.payload;
 			})
 			.addCase(getSaleById.rejected, (state, action) => {
-				state.loading = false;
+				state.detailLoading = false;
 				state.error = action.payload ?? "Error al obtener venta";
 			})
 			//CREATE SALE

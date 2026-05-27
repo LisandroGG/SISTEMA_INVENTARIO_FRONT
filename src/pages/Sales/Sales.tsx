@@ -11,13 +11,13 @@ import { SquarePlus } from "lucide-react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import CreateSaleModal from "./modals/CreateSaleModal";
+import DetailSaleModal from "./modals/DetailSaleModal";
 import SaleCard from "./SaleCard";
 
 const Sales = () => {
 	const { sales } = useSelector((state: RootState) => state.sales);
-	const { openModal, closeModal, isOpen, modalState } = useModalState<{
-		id?: number;
-	}>();
+	const { openModal, closeModal, isOpen } = useModalState();
+	const [selectedSaleId, setSelectedSaleId] = useState<number | null>(null);
 
 	const {
 		page,
@@ -85,7 +85,11 @@ const Sales = () => {
 				<div className="flex-1">
 					<div className="flex flex-col gap-1.5">
 						{sales.map((s) => (
-							<SaleCard key={s.id} sale={s} />
+							<SaleCard
+								key={s.id}
+								sale={s}
+								onViewDetail={(id) => setSelectedSaleId(id)}
+							/>
 						))}
 					</div>
 				</div>
@@ -100,6 +104,12 @@ const Sales = () => {
 				</div>
 			</div>
 			<CreateSaleModal open={isOpen("create")} onCancel={closeModal} />
+			{selectedSaleId && (
+				<DetailSaleModal
+					id={selectedSaleId}
+					onCancel={() => setSelectedSaleId(null)}
+				/>
+			)}
 		</Section>
 	);
 };
