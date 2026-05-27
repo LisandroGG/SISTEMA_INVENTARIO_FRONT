@@ -3,6 +3,7 @@ import Modal from "@components/Common/Modal";
 import useCrudDispatch from "@hooks/useCrudDispatch";
 import { updateCategory } from "@redux/features/category/categoryThunks";
 import type { Category } from "@redux/features/category/categoryTypes";
+import { validateCategory } from "@utils/validations/categoryValidations";
 import { useEffect, useMemo, useState } from "react";
 
 type EditCategoryModalProps = {
@@ -36,10 +37,14 @@ const EditCategoryModal = ({
 	}, [name, data]);
 
 	const handleSubmit = async () => {
-		if (!isValid) {
-			setError("El nombre es obligatorio");
+		const validationError = validateCategory(name);
+
+		if (validationError) {
+			setError(validationError);
 			return;
 		}
+
+		setError("");
 
 		try {
 			if (!data) return;

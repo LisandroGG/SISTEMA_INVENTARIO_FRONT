@@ -2,6 +2,7 @@ import Input from "@components/Common/Input";
 import Modal from "@components/Common/Modal";
 import useCrudDispatch from "@hooks/useCrudDispatch";
 import { createCategory } from "@redux/features/category/categoryThunks";
+import { validateCategory } from "@utils/validations/categoryValidations";
 import { useState } from "react";
 
 type CreateCategoryModalProps = {
@@ -17,11 +18,24 @@ const CreateCategoryModal = ({ open, onCancel }: CreateCategoryModalProps) => {
 
 	const isValid = name.trim() !== "";
 
+	const clearFields = () => {
+		setName("");
+	};
+
+	const handleCancel = () => {
+		clearFields();
+		onCancel();
+	};
+
 	const handleSubmit = async () => {
-		if (!isValid) {
-			setError("El nombre es obligatorio");
+		const validationError = validateCategory(name);
+
+		if (validationError) {
+			setError(validationError);
 			return;
 		}
+
+		setError("");
 
 		try {
 			await run(createCategory, {
@@ -37,7 +51,7 @@ const CreateCategoryModal = ({ open, onCancel }: CreateCategoryModalProps) => {
 		<Modal
 			title="Nueva categoría"
 			confirmText="Crear"
-			onCancel={onCancel}
+			onCancel={handleCancel}
 			onSubmit={handleSubmit}
 			disabled={!isValid}
 			error={error}
