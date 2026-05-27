@@ -6,6 +6,7 @@ import useCrudDispatch from "@hooks/useCrudDispatch";
 import { getAllProductsNoPagination } from "@redux/features/products/productThunks";
 import { createSale } from "@redux/features/sale/saleThunks";
 import type { AppDispatch, RootState } from "@redux/store";
+import { validateCreateSale } from "@utils/validations/saleValidations";
 import { Plus, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -56,15 +57,26 @@ const CreateSaleModal = ({ open, onCancel }: CreateSaleModalProps) => {
 		setItems((prev) => prev.filter((_, i) => i !== index));
 	};
 
-	const handleSubmit = async () => {
+	const clearFields = () => {
+		setClientName("");
+		setItems([{ productId: 0, quantity: 1 }]);
 		setError("");
+	};
 
-		if (!isValid) {
-			setError(
-				"Todos los productos deben ser válidos y tener cantidad mayor a 0",
-			);
+	const handleCancel = () => {
+		clearFields();
+		onCancel();
+	};
+
+	const handleSubmit = async () => {
+		const validationError = validateCreateSale(clientName, items);
+
+		if (validationError) {
+			setError(validationError);
 			return;
 		}
+
+		setError("");
 
 		try {
 			await run(createSale, {
@@ -87,7 +99,7 @@ const CreateSaleModal = ({ open, onCancel }: CreateSaleModalProps) => {
 		<Modal
 			title="Nueva venta"
 			confirmText="Crear"
-			onCancel={onCancel}
+			onCancel={handleCancel}
 			onSubmit={handleSubmit}
 			disabled={!isValid}
 			error={error}
