@@ -71,6 +71,7 @@ const CreateProductModal = ({ open, onCancel }: CreateProductModalProps) => {
 				quantity: Number(quantity),
 			});
 
+			clearFields();
 			onCancel();
 		} catch {}
 	};

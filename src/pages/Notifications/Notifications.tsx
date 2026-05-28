@@ -24,6 +24,7 @@ const Notifications = () => {
 	const { openModal, closeModal, isOpen, modalState } = useModalState<{
 		id?: number;
 	}>();
+	const hasUnreadNotifications = notifications.some((n) => !n.read);
 
 	const { page, totalPages, hasNext, hasPrev, loading, goToPage } =
 		usePagination((state) => state.notifications, getAllNotifications);
@@ -40,7 +41,11 @@ const Notifications = () => {
 		<Section>
 			<div className="flex flex-col min-h-[93vh] animate-fadeInToBottom">
 				<div className="flex items-center justify-center md:justify-end mb-4">
-					<Button variant="primary" onClick={() => openModal("mark-all")}>
+					<Button
+						variant="primary"
+						disabled={!hasUnreadNotifications}
+						onClick={() => openModal("mark-all")}
+					>
 						Marcar todas como leídas
 					</Button>
 				</div>

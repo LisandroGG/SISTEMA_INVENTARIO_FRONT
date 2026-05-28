@@ -17,6 +17,8 @@ const ConfirmModal = ({
 	onConfirm,
 }: ConfirmModalProps) => {
 	useEffect(() => {
+		if (!open) return;
+
 		const handleKeyDown = (e: KeyboardEvent) => {
 			if (e.key === "Escape") onCancel();
 			if (e.key === "Enter") onConfirm();
@@ -24,7 +26,7 @@ const ConfirmModal = ({
 
 		document.addEventListener("keydown", handleKeyDown);
 		return () => document.removeEventListener("keydown", handleKeyDown);
-	}, [onCancel, onConfirm]);
+	}, [open, onCancel, onConfirm]);
 	if (!open) return null;
 
 	return (
