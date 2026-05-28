@@ -24,7 +24,6 @@ export type RecentSale = {
 	clientName: string;
 	status: "completed" | "cancelled";
 	total: number;
-	notes?: string;
 	createdAt?: string;
 	updatedAt?: string;
 

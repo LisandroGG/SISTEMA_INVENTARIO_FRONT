@@ -68,9 +68,6 @@ export const createProduct = createAsyncThunk<
 
 		formData.append("name", productData.name);
 		formData.append("price", productData.price.toString());
-		if (productData.description) {
-			formData.append("description", productData.description);
-		}
 		formData.append("categoryId", String(productData.categoryId));
 		if (productData.quantity !== undefined) {
 			formData.append("quantity", String(productData.quantity));
@@ -96,9 +93,6 @@ export const updateProduct = createAsyncThunk<
 
 		formData.append("name", productData.name);
 		formData.append("price", productData.price.toString());
-		if (productData.description !== undefined) {
-			formData.append("description", productData.description);
-		}
 		formData.append("categoryId", String(productData.categoryId));
 		if (productData.img) {
 			formData.append("img", productData.img);

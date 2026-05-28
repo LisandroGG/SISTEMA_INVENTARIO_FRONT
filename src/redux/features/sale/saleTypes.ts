@@ -18,7 +18,6 @@ export type Sale = {
 	clientName: string;
 	status: "completed" | "cancelled";
 	total: number;
-	notes?: string;
 	createdAt?: string;
 	updatedAt?: string;
 

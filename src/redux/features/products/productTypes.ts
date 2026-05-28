@@ -1,7 +1,6 @@
 export type Category = {
 	id: number;
 	name: string;
-	description?: string;
 };
 
 export type Stock = {
@@ -15,7 +14,6 @@ export type Product = {
 	id: number;
 	name: string;
 	price: number;
-	description: string;
 	categoryId: number;
 	img?: string;
 
@@ -65,7 +63,6 @@ export type DeleteProductResponse = {
 export type CreateProductData = {
 	name: string;
 	price: number;
-	description?: string;
 	categoryId: number;
 	quantity?: number;
 	img?: File;
@@ -75,7 +72,6 @@ export type UpdateProductData = {
 	id: number;
 	name: string;
 	price: number;
-	description?: string;
 	categoryId: number;
 	img?: File;
 };
