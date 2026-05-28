@@ -44,4 +44,26 @@
 * {
 	box-sizing: border-box;
 	font-family: "Inter Variable", sans-serif;
+
+	scrollbar-width: thin;
+	scrollbar-color: #d4d4d8 #fafafa;
+}
+
+::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+
+::-webkit-scrollbar-track {
+	background: #fafafa;
+	border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #d4d4d8;
+	border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #a1a1aa;
 }
