@@ -8,12 +8,12 @@ type LowStockProductsProps = {
 const LowStockProducts = ({ products = [] }: LowStockProductsProps) => {
 	return (
 		<DashboardCard title="Productos con poco stock" className="xl:col-span-2">
-			<div className="min-h-39 overflow-y-auto pr-2 grid grid-cols-1 md:grid-cols-2 gap-3">
+			<div className="h-38 overflow-y-auto pr-2 grid grid-cols-1 md:grid-cols-2 gap-3">
 				{products.length ? (
 					products.map((product) => (
 						<div
 							key={product.id}
-							className="flex items-center justify-between rounded-lg border border-neutral-200 bg-neutral-50 p-3"
+							className="flex h-17 items-center justify-between rounded-lg border border-neutral-200 bg-neutral-50 p-3"
 						>
 							<div>
 								<p className="font-medium text-neutral-800">

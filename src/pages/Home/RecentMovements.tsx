@@ -8,7 +8,7 @@ type RecentMovementsProps = {
 const RecentMovements = ({ movements = [] }: RecentMovementsProps) => {
 	return (
 		<DashboardCard title="Movimientos recientes">
-			<div className="min-h-70 flex flex-col gap-3">
+			<div className="min-h-100 flex flex-col gap-3">
 				{movements.length ? (
 					movements.map((movement) => (
 						<div

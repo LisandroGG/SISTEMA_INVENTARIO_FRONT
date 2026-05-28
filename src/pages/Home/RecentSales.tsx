@@ -8,7 +8,7 @@ type RecentSalesProps = {
 const RecentSales = ({ sales = [] }: RecentSalesProps) => {
 	return (
 		<DashboardCard title="Ventas recientes">
-			<div className="min-h-70 flex flex-col gap-3">
+			<div className="min-h-100 flex flex-col gap-3">
 				{sales.length ? (
 					sales.map((sale) => (
 						<div
