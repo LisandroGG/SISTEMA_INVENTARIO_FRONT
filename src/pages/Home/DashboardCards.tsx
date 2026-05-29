@@ -29,7 +29,7 @@ const DashboardCards = ({ stats }: DashboardCardsProps) => {
 			{cards.map((card) => (
 				<div
 					key={card.title}
-					className="rounded-lg border border-neutral-200 bg-white shadow-md p-5"
+					className="rounded-lg border-l-3 border-l-primary border border-neutral-200 bg-white shadow-md p-5"
 				>
 					<p className="text-sm text-neutral-500">{card.title}</p>
 
