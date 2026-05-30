@@ -7,8 +7,11 @@ type LowStockProductsProps = {
 
 const LowStockProducts = ({ products = [] }: LowStockProductsProps) => {
 	return (
-		<DashboardCard title="Productos con poco stock" className="xl:col-span-2 border-l-tertiary">
-			<div className="h-40 overflow-y-auto pr-2 grid grid-cols-1 md:grid-cols-2 gap-3">
+		<DashboardCard
+			title="Productos con poco stock"
+			className="xl:col-span-2 border-t-tertiary"
+		>
+			<div className="h-39 overflow-y-auto pr-2 grid grid-cols-1 md:grid-cols-2 gap-3">
 				{products.length ? (
 					products.map((product) => (
 						<div
@@ -27,7 +30,7 @@ const LowStockProducts = ({ products = [] }: LowStockProductsProps) => {
 								<div className="mt-2 h-1.5 overflow-hidden rounded-full bg-neutral-200">
 									<div
 										className={`h-full transition-all ${
-											product.quantity <= 0 ? "bg-red-600" : "bg-yellow-500"
+											product.quantity <= 0 ? "" : "bg-tertiary"
 										}`}
 										style={{
 											width: `${Math.min(

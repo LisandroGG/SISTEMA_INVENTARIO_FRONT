@@ -25,11 +25,11 @@ const DashboardCards = ({ stats }: DashboardCardsProps) => {
 	];
 
 	return (
-		<div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+		<div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
 			{cards.map((card) => (
 				<div
 					key={card.title}
-					className="rounded-lg border-l-3 border-l-primary border border-neutral-200 bg-white shadow-md p-5"
+					className="rounded-lg border-t-3 border-t-primary border border-neutral-200 bg-white shadow-md p-5"
 				>
 					<p className="text-sm text-neutral-500">{card.title}</p>
 

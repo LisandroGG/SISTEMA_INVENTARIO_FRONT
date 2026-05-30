@@ -9,7 +9,7 @@ const statusLabel: Record<string, string> = {
 
 const statusColor: Record<string, string> = {
 	completed: "bg-primary/10 text-primary",
-	cancelled: "bg-red-500/10 text-red-500",
+	cancelled: "bg-tertiary/10 text-tertiary",
 };
 
 const statusIcon: Record<string, React.ReactNode> = {

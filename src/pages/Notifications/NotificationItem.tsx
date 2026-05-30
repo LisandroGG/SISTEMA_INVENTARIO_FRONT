@@ -13,7 +13,7 @@ const notificationTypeColor: Record<string, string> = {
 	low_stock: "bg-tertiary/10 text-tertiary",
 	sale_completed: "bg-primary/10 text-primary",
 	adjustment: "bg-secondary/10 text-secondary",
-	sale_canceled: "bg-red-500/10 text-red-500",
+	sale_canceled: "bg-tertiary/10 text-tertiary",
 };
 
 const notificationTypeIcon: Record<string, React.ReactNode> = {
