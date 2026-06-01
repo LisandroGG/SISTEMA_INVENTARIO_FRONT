@@ -1,3 +1,4 @@
+import { BASE_URL } from "@api/axiosInstance";
 import Button from "@components/Common/Button";
 import type { Product } from "@redux/features/products/productTypes";
 import { PackagePlus, Pencil, Trash } from "lucide-react";
@@ -36,7 +37,11 @@ const ProductCard = ({
 			<figure className="my-2 overflow-hidden rounded-md w-full flex items-center justify-center">
 				<div>
 					<img
-						src={product?.img ?? "assets/img/placeholder.webp"}
+						src={
+							product?.img
+								? `${BASE_URL}${product.img}`
+								: "assets/img/placeholder.webp"
+						}
 						alt={product?.name}
 						className="w-60 h-45 rounded-md"
 					/>
