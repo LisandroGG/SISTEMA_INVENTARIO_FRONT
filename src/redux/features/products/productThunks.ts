@@ -89,18 +89,9 @@ export const updateProduct = createAsyncThunk<
 	{ rejectValue: string }
 >("products/updateProduct", async (productData, { rejectWithValue }) => {
 	try {
-		const formData = new FormData();
-
-		formData.append("name", productData.name);
-		formData.append("price", productData.price.toString());
-		formData.append("categoryId", String(productData.categoryId));
-		if (productData.img) {
-			formData.append("img", productData.img);
-		}
-
 		const response = await axios.put<ProductResponse>(
 			`/products/${productData.id}`,
-			formData,
+			productData,
 		);
 		return response.data;
 	} catch (error) {

@@ -11,7 +11,7 @@ const LowStockProducts = ({ products = [] }: LowStockProductsProps) => {
 			title="Productos con poco stock"
 			className="xl:col-span-2 border-t-tertiary"
 		>
-			<div className="h-39 overflow-y-auto pr-2 grid grid-cols-1 md:grid-cols-2 gap-3">
+			<div className="h-60 overflow-y-auto pr-2 grid grid-cols-1 md:grid-cols-2 gap-3 auto-rows-min">
 				{products.length ? (
 					products.map((product) => (
 						<div

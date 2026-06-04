@@ -73,5 +73,4 @@ export type UpdateProductData = {
 	name: string;
 	price: number;
 	categoryId: number;
-	img?: File;
 };
