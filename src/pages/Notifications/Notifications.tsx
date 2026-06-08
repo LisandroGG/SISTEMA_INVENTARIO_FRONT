@@ -50,16 +50,24 @@ const Notifications = () => {
 					</Button>
 				</div>
 				<div className="flex-1">
-					<div className="flex flex-col gap-1.5">
-						{notifications.map((n) => (
-							<NotificationItem
-								key={n.id}
-								notification={n}
-								onMarkAsRead={(id) => openModal("mark-read", { id })}
-								onDelete={(id) => openModal("delete", { id })}
-							/>
-						))}
-					</div>
+					{notifications.length ? (
+						<div className="flex flex-col gap-1.5">
+							{notifications.map((n) => (
+								<NotificationItem
+									key={n.id}
+									notification={n}
+									onMarkAsRead={(id) => openModal("mark-read", { id })}
+									onDelete={(id) => openModal("delete", { id })}
+								/>
+							))}
+						</div>
+					) : (
+						<div className="grid place-content-center place-items-center h-[80vh]">
+							<p className="text-md text-neutral-400">
+								No hay notificaciones para mostrar
+							</p>
+						</div>
+					)}
 				</div>
 				<div className="mt-auto pt-4">
 					<Pagination

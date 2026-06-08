@@ -101,15 +101,23 @@ const Sales = () => {
 					</Button>
 				</div>
 				<div className="flex-1">
-					<div className="flex flex-col gap-1.5">
-						{sales.map((s) => (
-							<SaleCard
-								key={s.id}
-								sale={s}
-								onViewDetail={(id) => setSelectedSaleId(id)}
-							/>
-						))}
-					</div>
+					{sales.length ? (
+						<div className="flex flex-col gap-1.5">
+							{sales.map((s) => (
+								<SaleCard
+									key={s.id}
+									sale={s}
+									onViewDetail={(id) => setSelectedSaleId(id)}
+								/>
+							))}
+						</div>
+					) : (
+						<div className="grid place-content-center place-items-center h-[80vh]">
+							<p className="text-md text-neutral-400">
+								No hay ventas para mostrar
+							</p>
+						</div>
+					)}
 				</div>
 				<div className="mt-auto pt-4">
 					<Pagination

@@ -24,7 +24,11 @@ const Table = <T extends TableItem>({
 	emptyMessage = "No hay datos",
 }: TableProps<T>) => {
 	if (!data.length) {
-		return <div>{emptyMessage}</div>;
+		return (
+			<div className="grid place-content-center place-items-center h-[80vh]">
+				<p className="text-md text-neutral-400">{emptyMessage}</p>
+			</div>
+		);
 	}
 
 	return (

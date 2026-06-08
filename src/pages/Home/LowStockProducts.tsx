@@ -48,7 +48,7 @@ const LowStockProducts = ({ products = [] }: LowStockProductsProps) => {
 						</div>
 					))
 				) : (
-					<div className="md:col-span-2 grid place-content-center">
+					<div className="md:col-span-2 grid place-content-center h-[20vh]">
 						<p className="text-sm text-neutral-400">
 							Sin productos con stock bajo
 						</p>

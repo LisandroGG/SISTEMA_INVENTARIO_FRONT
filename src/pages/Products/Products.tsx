@@ -119,17 +119,27 @@ const Products = () => {
 					</Button>
 				</div>
 				<div className="flex-1">
-					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-						{products.map((p) => (
-							<ProductCard
-								key={p.id}
-								product={p}
-								onEdit={(product) => openModal("edit", product)}
-								onDelete={(product) => openModal("delete", product)}
-								onAdjustStock={(product) => openModal("adjust-stock", product)}
-							/>
-						))}
-					</div>
+					{products.length ? (
+						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+							{products.map((p) => (
+								<ProductCard
+									key={p.id}
+									product={p}
+									onEdit={(product) => openModal("edit", product)}
+									onDelete={(product) => openModal("delete", product)}
+									onAdjustStock={(product) =>
+										openModal("adjust-stock", product)
+									}
+								/>
+							))}
+						</div>
+					) : (
+						<div className="grid place-content-center place-items-center h-[80vh]">
+							<p className="text-md text-neutral-400">
+								No hay productos para mostrar
+							</p>
+						</div>
+					)}
 				</div>
 				<div className="mt-auto pt-4">
 					<Pagination

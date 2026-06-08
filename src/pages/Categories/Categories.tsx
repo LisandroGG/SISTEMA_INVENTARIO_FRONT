@@ -112,7 +112,7 @@ const Categories = () => {
 						columns={columns}
 						data={categories}
 						renderActions={renderActions}
-						emptyMessage="No hay categorias"
+						emptyMessage="No hay categorias para mostrar"
 					/>
 				</div>
 				<div className="mt-auto pt-4">

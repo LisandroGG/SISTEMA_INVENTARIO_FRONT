@@ -158,7 +158,7 @@ const Movements = () => {
 					<Table
 						columns={columns}
 						data={movements}
-						emptyMessage="No hay movimientos"
+						emptyMessage="No hay movimientos para mostrar"
 					/>
 				</div>
 				<div className="mt-auto pt-4">
